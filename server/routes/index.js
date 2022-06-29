@@ -15,6 +15,9 @@ app.use(express.urlencoded({ extended: false }));
 const publicRoutes = require("./public.routes");
 app.use(publicRoutes);
 
+const memberRoutes = require("./member.routes");
+app.use(memberRoutes);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   res.status(404);
