@@ -8,11 +8,11 @@ const memberController = new MemberController();
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member, no methods currently
+ *  Endpoint Routes - GET, /member, homepage for members only
  *  ====================================================== */
 
 router.get("/member", (req, res) => {
-  const msg = "You called a /member route.";
+  const msg = "Welcome to our Library (members)";
 
   console.log(msg);
   res.status(200).json(`Success: ${msg}`);
@@ -20,32 +20,32 @@ router.get("/member", (req, res) => {
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/vloans, with viewloans()
+ *  Endpoint Routes - GET, /member/v-loans, with viewloans()
  *  ====================================================== */
-router.get("/member/vloans/:memberid", memberController.viewloans);
+router.get("/member/v-loans/:memberid", memberController.viewloans);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/vreservations, with viewreservations()
+ *  Endpoint Routes - GET, /member/v-reservations, with viewreservations()
  *  ====================================================== */
-router.get("/member/vreservations/:memberid", memberController.viewreservations);
+router.get("/member/v-reservations/:memberid", memberController.viewreservations);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/vhistories, with viewhistories()
+ *  Endpoint Routes - GET, /member/v-histories, with viewhistories()
  *  ====================================================== */
-router.get("/member/vhistories/:memberid", memberController.viewhistories);
+router.get("/member/v-histories/:memberid", memberController.viewhistories);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/vreviews, with viewreviews()
+ *  Endpoint Routes - GET, /member/v-reviews, with viewreviews()
  *  ====================================================== */
-router.get("/member/vreviews/:memberid", memberController.viewreviews);
+router.get("/member/v-reviews/:memberid", memberController.viewreviews);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/vprofile, with viewprofile()
+ *  Endpoint Routes - GET, /member/v-profile, with viewprofile()
  *  ====================================================== */
-router.get("/member/vprofile/:memberid", memberController.viewprofile);
+router.get("/member/v-profile/:memberid", memberController.viewprofile);
 
 module.exports = router;

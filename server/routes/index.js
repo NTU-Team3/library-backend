@@ -18,6 +18,9 @@ app.use(publicRoutes);
 const memberRoutes = require("./member.routes");
 app.use(memberRoutes);
 
+const adminRoutes = require("./admin.routes");
+app.use(adminRoutes);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   res.status(404);

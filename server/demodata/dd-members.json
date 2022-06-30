@@ -1,0 +1,175 @@
+[
+  {
+    "_id": "62bb5207127ffb266882da91",
+    "name": "ikoh",
+    "email": "ikoh@mail.com",
+    "password": "11111111",
+    "profilepic": "https://icon-library.com/images/icon-avatars/icon-avatars-12.jpg",
+    "outstandingfines": 5.1,
+    "loans": [
+      {
+        "_id": "62bdcff38123caa7ef1df01a",
+        "book_id": "62b9793993309f9b594961a0",
+        "title": "Gilead",
+        "status": "on loan",
+        "loandate": "2022-06-18T00:00:00.000+00:00",
+        "duedate": "2022-07-08T00:00:00.000+00:00"
+      },
+
+      {
+        "_id": "62bdcff38123caa7ef1df01b",
+        "book_id": "62b9793993309f9b594961a1",
+        "title": "Spider's Web",
+        "status": "on loan",
+        "loandate": "2022-06-20T00:00:00.000+00:00",
+        "duedate": "2022-07-10T00:00:00.000+00:00"
+      },
+
+      {
+        "_id": "62bdcff38123caa7ef1df01c",
+        "book_id": "62b9793993309f9b594961a2",
+        "title": "The One Tree",
+        "status": "returned",
+        "loandate": "2020-11-01T00:00:00.000+00:00",
+        "duedate": "2020-11-22T00:00:00.000+00:00",
+        "returndate": "2020-11-11T00:00:00.000+00:00"
+      },
+
+      {
+        "_id": "62bdcff38123caa7ef1df01d",
+        "book_id": "62b9793993309f9b594961a3",
+        "title": "Rage of angels",
+        "status": "returned",
+        "loandate": "2020-12-01T00:00:00.000+00:00",
+        "duedate": "2020-12-22T00:00:00.000+00:00",
+        "returndate": "2020-12-20T00:00:00.000+00:00"
+      }
+    ],
+
+    "reservations": [
+      {
+        "_id": "62bdcff38123caa7ef1df01e",
+        "book_id": "62b9793993309f9b594961a4",
+        "title": "The Four Loves",
+        "status": "Pickup ready",
+        "latestpickup": "2022-08-01T00:00:00.000+00:00"
+      },
+
+      {
+        "_id": "62bdcff38123caa7ef1df01f",
+        "book_id": "62b9793993309f9b594961a5",
+        "title": "Soul of the Sword",
+        "status": "In Queue"
+      }
+    ],
+
+    "reviews": [
+      {
+        "_id": "62bdcff38123caa7ef1df11a",
+        "book_id": "62b9793993309f9b594961a6",
+        "title": "Spark of Genius",
+        "rating": 5,
+        "comments": "Fantastic read. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque odio et bibendum pulvinar.",
+        "reviewdate": "2019-11-11T00:00:00.000+00:00"
+      },
+
+      {
+        "_id": "62bdcff38123caa7ef1df11b",
+        "book_id": "62b9793993309f9b594961a7",
+        "title": "Tree and Leaf: Including MYTHOPOEIA",
+        "rating": 4,
+        "comments": "Page turner. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque odio et bibendum pulvinar.",
+        "reviewdate": "2019-12-12T00:00:00.000+00:00"
+      }
+    ]
+  },
+
+  {
+    "_id": "62bb5207127ffb266882da92",
+    "name": "swchee",
+    "email": "swchee@mail.com",
+    "password": "22222222",
+    "profilepic": "http://carismartes.com.br/assets/global/images/avatars/avatar5_big@2x.png",
+    "outstandingfines": 1.9,
+    "loans": [
+      {
+        "_id": "62bdcff38123caa7ef1df02a",
+        "book_id": "62b9793993309f9b594961a8",
+        "title": "The Problem of Pain",
+        "status": "on loan",
+        "loandate": "2022-06-18T00:00:00.000+00:00",
+        "duedate": "2022-07-08T00:00:00.000+00:00"
+      },
+
+      {
+        "_id": "62bdcff38123caa7ef1df02b",
+        "book_id": "62b9793993309f9b594961a9",
+        "title": "Illustrated Guide to the National Electrical Code",
+        "status": "returned",
+        "loandate": "2020-11-01T00:00:00.000+00:00",
+        "duedate": "2020-11-22T00:00:00.000+00:00",
+        "returndate": "2020-11-11T00:00:00.000+00:00"
+      }
+    ],
+
+    "reservations": [
+      {
+        "_id": "62bdcff38123caa7ef1df02c",
+        "book_id": "62b9793993309f9b594961aa",
+        "title": "Feel the Fear-- and Do it Anyway",
+        "status": "In Queue."
+      }
+    ],
+
+    "reviews": [
+      {
+        "_id": "62bdcff38123caa7ef1df02d",
+        "book_id": "62b9793993309f9b594961ab",
+        "title": "How to Stop Worrying and Start Living",
+        "rating": 4,
+        "comments": "Kept me on edge. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque odio et bibendum pulvinar.",
+        "reviewdate": "2019-12-12T00:00:00.000+00:00"
+      }
+    ]
+  },
+
+  {
+    "_id": "62bb5207127ffb266882da93",
+    "name": "rlau",
+    "email": "rlau@mail.com",
+    "password": "33333333",
+    "loans": [
+      {
+        "_id": "62bdcff38123caa7ef1df03a",
+        "book_id": "62b9793993309f9b594961ac",
+        "title": "Difficult Conversations",
+        "status": "on loan",
+        "loandate": "2022-06-18T00:00:00.000+00:00",
+        "duedate": "2022-07-08T00:00:00.000+00:00"
+      }
+    ]
+  },
+
+  {
+    "_id": "62bb5207127ffb266882da94",
+    "name": "sbahri",
+    "email": "sbahri@mail.com",
+    "password": "44444444",
+    "reservations": [
+      {
+        "_id": "62bdcff38123caa7ef1df04e",
+        "book_id": "62b9793993309f9b594961ad",
+        "title": "An Odyssey in Learning and Perception",
+        "status": "Pickup ready",
+        "latestpickup": "2022-08-01T00:00:00.000+00:00"
+      }
+    ]
+  },
+
+  {
+    "_id": "62bb5207127ffb266882da95",
+    "name": "kmsheng",
+    "email": "kmshengmail.com",
+    "password": "55555555"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "name": "haha",
+  "email": "haha@mail.com",
+  "password": "00000000",
+  "profilepic": "https://media.istockphoto.com/photos/illustration-of-smiling-happy-man-with-laptop-sitting-in-armchair-picture-id1226886130?s=612x612",
+  "outstandingfines": { "$numberDecimal": "0" },
+  "reservations": [],
+  "loans": [],
+  "reviews": [],
+  "createdAt": { "$date": { "$numberLong": "1656617183739" } },
+  "updatedAt": { "$date": { "$numberLong": "1656617183739" } },
+  "__v": { "$numberInt": "0" }
+}
