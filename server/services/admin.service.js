@@ -97,4 +97,8 @@ module.exports = {
       return result;
     }
   },
+
+  /*
+   'updatereservations' - SERVICE
+  */
 };

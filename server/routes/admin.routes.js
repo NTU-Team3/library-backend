@@ -29,4 +29,9 @@ router.get("/admin/a-members/", adminController.addmembers);
  *  ====================================================== */
 router.get("/admin/d-members/", adminController.deletemembers);
 
+/** ======================================================
+ *  Endpoint Routes - PUT, /admin/u-reservations, with updatereservations()
+ *  ====================================================== */
+router.put("/admin/u-reservations/", adminController.updatereservations);
+
 module.exports = router;
