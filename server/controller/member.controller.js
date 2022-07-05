@@ -13,7 +13,7 @@ class MemberController {
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (View Loans) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (view loans) - Invalid member id, typeof objectId expected.`);
     }
 
     const { status, data, message } = await memberService.viewloans(id);
@@ -30,7 +30,7 @@ class MemberController {
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (View Reservations) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (view reservations) - Invalid member id, typeof objectId expected.`);
     }
 
     const { status, data, message } = await memberService.viewreservations(id);
@@ -47,7 +47,7 @@ class MemberController {
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (View Histories) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (view histories) - Invalid member id, typeof objectId expected.`);
     }
 
     const { status, data, message } = await memberService.viewhistories(id);
@@ -64,7 +64,7 @@ class MemberController {
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (View Reviews) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (view reviews) - Invalid member id, typeof objectId expected.`);
     }
 
     const { status, data, message } = await memberService.viewreviews(id);
@@ -81,10 +81,64 @@ class MemberController {
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (View Profile) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (view profile) - Invalid member id, typeof objectId expected.`);
     }
 
     const { status, data, message } = await memberService.viewprofile(id);
+    res.status(status);
+    res.json({ message, data });
+  }
+
+  //
+  /** ======================================================
+   *  CONTROLLER - PUT, updateloans()
+   *  ====================================================== */
+
+  async updateloans(req, res) {
+    const { id, bid } = req.body;
+
+    if (!ObjectId.isValid(id) || !ObjectId.isValid(bid)) {
+      res.status(400);
+      return res.send(`Controller (update loans) - Invalid member id or book id, typeof objectId expected.`);
+    }
+
+    const { status, data, message } = await memberService.updateloans(id, bid);
+    res.status(status);
+    res.json({ message, data });
+  }
+
+  //
+  /** ======================================================
+   *  CONTROLLER - PUT, updatereviews()
+   *  ====================================================== */
+
+  async updatereviews(req, res) {
+    const { id, rid, rrating, rcomments } = req.body;
+
+    const rlowerbound = 0.0;
+    const rupperbound = 5.0;
+
+    if (!ObjectId.isValid(id) || !ObjectId.isValid(rid)) {
+      res.status(400);
+      return res.send(`Controller (update reviews) - Invalid member id or review id, typeof objectId expected.`);
+    }
+
+    if (typeof rrating != "number") {
+      res.status(400);
+      return res.send(`Controller (update reviews) - Invalid rating, typeof Number expected.`);
+    }
+
+    if (rrating < rlowerbound || rrating > rupperbound) {
+      res.status(400);
+      return res.send(`Controller (update reviews) - Invalid rating, it should fall between ${rlowerbound} - ${rupperbound}.`);
+    }
+
+    if (typeof rcomments != "string") {
+      res.status(400);
+      return res.send(`Controller (update reviews) - Invalid comment, typeof String expected.`);
+    }
+
+    const { status, data, message } = await memberService.updatereviews(id, rid, rrating, rcomments);
     res.status(status);
     res.json({ message, data });
   }
@@ -101,12 +155,12 @@ class MemberController {
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (Update Profile) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (update profile) - Invalid member id, typeof objectId expected.`);
     }
 
     if (!memail.match(mailformat)) {
       res.status(400);
-      return res.send(`Controller (Update Profile) - Invalid format for email address.`);
+      return res.send(`Controller (update profile) - Invalid email, format is incorrect.`);
     }
 
     const { status, data, message } = await memberService.updateprofile(id, mname, memail, mpassword);
@@ -124,12 +178,12 @@ class MemberController {
 
     if (!ObjectId.isValid(id) || !ObjectId.isValid(bid)) {
       res.status(400);
-      return res.send(`Controller (Checkout) - Invalid member id or book id, typeof objectId expected.`);
+      return res.send(`Controller (checkout) - Invalid member id or book id, typeof objectId expected.`);
     }
 
-    if (typeof booktitle != "string") {
+    if (typeof btitle != "string") {
       res.status(400);
-      return res.send(`Controller (Checkout) - Invalid title, typeof String expected.`);
+      return res.send(`Controller (checkout) - Invalid title, typeof String expected.`);
     }
 
     const { status, data, message } = await memberService.checkout(id, bid, btitle);

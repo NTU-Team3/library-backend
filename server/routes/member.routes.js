@@ -50,6 +50,18 @@ router.get("/member/v-profile/:id", memberController.viewprofile);
 
 //
 /** ======================================================
+ *  ROUTES - PUT, /member/u-loans, updateloans()
+ *  ====================================================== */
+router.put("/member/u-loans/", memberController.updateloans);
+
+//
+/** ======================================================
+ *  ROUTES - PUT, /member/u-reviews, updatereviews()
+ *  ====================================================== */
+router.put("/member/u-reviews/", memberController.updatereviews);
+
+//
+/** ======================================================
  *  ROUTES - PUT, /member/u-profile, updateprofile()
  *  ====================================================== */
 router.put("/member/u-profile/", memberController.updateprofile);

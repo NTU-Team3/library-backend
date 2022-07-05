@@ -257,7 +257,7 @@ module.exports = {
       data: null,
     };
 
-    const pfrecord = await Member.findById(id, "name email password");
+    const pfrecord = await Member.find({ _id: id }, "name email password");
 
     if (!pfrecord.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -276,6 +276,98 @@ module.exports = {
     result.status = 200;
     result.message = "Member Message - " + msg;
     result.data = pfrecord;
+
+    return result;
+  },
+
+  //
+  /** ======================================================
+   *  SERVICE - PUT, updateloans()
+   *  ====================================================== */
+
+  updateloans: async (id, bid) => {
+    const result = {
+      status: null,
+      message: null,
+      data: null,
+    };
+
+    const msg = "LOAN update SUCCESSFUL.";
+    console.log("\nMember Console - " + msg);
+    console.log("service layer - work in progress");
+
+    result.status = 200;
+    result.message = "Member Message - " + msg;
+    result.data = "service layer - work in progress";
+
+    return result;
+  },
+
+  //
+  /** ======================================================
+   *  SERVICE - PUT, updatereviews()
+   *  ====================================================== */
+  updatereviews: async (id, rid, rrating, rcomments) => {
+    const result = {
+      status: null,
+      message: null,
+      data: null,
+    };
+
+    const rvmember = await Member.find({ _id: id });
+
+    if (!rvmember.length) {
+      const msg = "PROFILE doesnt exists in database.";
+      console.log("\nMember Console - " + msg);
+
+      result.status = 404;
+      result.message = "Member Message - " + msg;
+
+      return result;
+    }
+
+    const rvrecords = await Member.aggregate([
+      { $match: { _id: ObjectId(id) } },
+      { $unwind: "$reviews" },
+      { $match: { "reviews._id": ObjectId(rid) } },
+      {
+        $project: {
+          "reviews._id": 1,
+          "reviews.book_id": 1,
+          "reviews.title": 1,
+          "reviews.rating": 1,
+          "reviews.comments": 1,
+          "reviews.reviewdate": 1,
+        },
+      },
+      {
+        $set: {
+          "reviews.rating": rrating,
+          "reviews.comments": rcomments,
+          "reviews.reviewdate": new Date(),
+        },
+      },
+    ]);
+
+    console.log(rvrecords);
+
+    if (!rvrecords.length) {
+      const msg = "this REVIEW does NOT EXIST in the database.";
+      console.log("\nMember Console - " + msg);
+
+      result.status = 404;
+      result.message = "Member Message - " + msg;
+
+      return result;
+    }
+
+    const msg = `REVIEW update SUCCESSFUL for "TITLE".`;
+    console.log("\nMember Console - " + msg);
+    console.log(`Updated rating: ${rrating}\nUpdated comments: ${rcomments}`);
+
+    result.status = 200;
+    result.message = "Member Message - " + msg;
+    result.data = `Updated rating: ${rrating}     Updated comments: ${rcomments}`;
 
     return result;
   },
@@ -312,15 +404,13 @@ module.exports = {
 
       await Member.findByIdAndUpdate(filter, updatefields);
 
-      const msg = "member PROFILE update SUCCESSFUL.";
+      const msg = "PROFILE update SUCCESSFUL.";
       console.log("\nAdmin Console - " + msg + "\n");
-      console.log(`Updated Name: ${mname}`);
-      console.log(`Updated Email: ${memail}`);
-      console.log(`Updated Password: ${mpassword}`);
+      console.log(`Updated name: ${mname}\nUpdated email: ${memail}\nUpdated Password: ${mpassword}`);
 
       result.status = 200;
       result.message = "Admin Message - " + msg;
-      result.data = `Updated Name: ${mname}     Updated Email: ${memail}`;
+      result.data = `Updated name: ${mname}     Updated email: ${memail}`;
 
       return result;
     }
@@ -351,6 +441,8 @@ module.exports = {
       return result;
     } else {
       // Would have used $push or $addToSet, however these are not available in free-tier of Mongo Atlas
+      // Below is the workaround solution proposed:
+
       const createobj = {
         _id: new mongoose.mongo.ObjectId(),
         book_id: bid,
@@ -404,7 +496,7 @@ module.exports = {
       // Adding single item from cart
       lnrecords.push(createobj);
 
-      // Removes the complex objects for reinsertion
+      // Removes the complex objects for reinsertion, these are currently "unwanted duplicates"
       lnrecords.splice(0, queryLen);
 
       await Member.findByIdAndUpdate(filter, { $set: { loans: lnrecords } });
