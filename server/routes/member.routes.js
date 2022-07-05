@@ -8,7 +8,7 @@ const memberController = new MemberController();
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member, homepage for members only
+ *  ROUTES - GET, /member, homepage for members only
  *  ====================================================== */
 
 router.get("/member", (req, res) => {
@@ -20,32 +20,44 @@ router.get("/member", (req, res) => {
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/v-loans, with viewloans()
+ *  ROUTES- GET, /member/v-loans/:id, with viewloans()
  *  ====================================================== */
 router.get("/member/v-loans/:id", memberController.viewloans);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/v-reservations, with viewreservations()
+ *  ROUTES - GET, /member/v-reservations/:id, with viewreservations()
  *  ====================================================== */
 router.get("/member/v-reservations/:id", memberController.viewreservations);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/v-histories, with viewhistories()
+ *  ROUTES - GET, /member/v-histories/:id, with viewhistories()
  *  ====================================================== */
 router.get("/member/v-histories/:id", memberController.viewhistories);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/v-reviews, with viewreviews()
+ *  ROUTES - GET, /member/v-reviews/:id, with viewreviews()
  *  ====================================================== */
 router.get("/member/v-reviews/:id", memberController.viewreviews);
 
 //
 /** ======================================================
- *  Endpoint Routes - GET, /member/v-profile, with viewprofile()
+ *  ROUTES - GET, /member/v-profile/:id, with viewprofile()
  *  ====================================================== */
 router.get("/member/v-profile/:id", memberController.viewprofile);
+
+//
+/** ======================================================
+ *  ROUTES - PUT, /member/u-profile, updateprofile()
+ *  ====================================================== */
+router.put("/member/u-profile/", memberController.updateprofile);
+
+//
+/** ======================================================
+ *  ROUTES - PUT, /member/checkout, checkout()
+ *  ====================================================== */
+router.put("/member/checkout/", memberController.checkout);
 
 module.exports = router;

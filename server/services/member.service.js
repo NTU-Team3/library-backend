@@ -1,10 +1,14 @@
-const Member = require("../model/Member");
+const mongoose = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
+const Member = require("../model/Member");
+const Book = require("../model/Book");
+const { json } = require("express");
 
 module.exports = {
-  /*
-   'viewloans' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET, viewloans()
+   *  ====================================================== */
   viewloans: async (id) => {
     const result = {
       status: null,
@@ -13,6 +17,7 @@ module.exports = {
     };
 
     const lnmember = await Member.find({ _id: id });
+    console.log(lnmember);
 
     if (!lnmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -35,8 +40,8 @@ module.exports = {
           "loans.status": 1,
           "loans.book_id": 1,
           "loans.title": 1,
+          "loans.loandate": 1,
           "loans.duedate": 1,
-          "loans.startdate": 1,
         },
       },
     ]);
@@ -62,9 +67,10 @@ module.exports = {
     return result;
   },
 
-  /*
-   'viewreservatioms' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET, viewreservations()
+   *  ====================================================== */
   viewreservations: async (id) => {
     const result = {
       status: null,
@@ -119,9 +125,10 @@ module.exports = {
     return result;
   },
 
-  /*
-     'viewhistories' - SERVICE
-    */
+  //
+  /** ======================================================
+   *  SERVICE - GET, viewhistories()
+   *  ====================================================== */
   viewhistories: async (id) => {
     const result = {
       status: null,
@@ -179,9 +186,10 @@ module.exports = {
     return result;
   },
 
-  /*
-   'viewreviews' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET, viewreviews())
+   *  ====================================================== */
 
   viewreviews: async (id) => {
     const result = {
@@ -238,9 +246,10 @@ module.exports = {
     return result;
   },
 
-  /*
-   'viewprofile' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET, viewprofile()
+   *  ====================================================== */
   viewprofile: async (id) => {
     const result = {
       status: null,
@@ -248,9 +257,9 @@ module.exports = {
       data: null,
     };
 
-    const pfrecords = await Member.find({ _id: id }, "name email password profilepic outstandingfines");
+    const pfrecord = await Member.findById(id, "name email password");
 
-    if (!pfrecords.length) {
+    if (!pfrecord.length) {
       const msg = "PROFILE doesnt exists in database.";
       console.log("\nMember Console - " + msg);
 
@@ -262,12 +271,153 @@ module.exports = {
 
     const msg = "view PROFILE.";
     console.log("\nMember Console - " + msg);
-    console.log(...pfrecords);
+    console.log(...pfrecord);
 
     result.status = 200;
     result.message = "Member Message - " + msg;
-    result.data = pfrecords;
+    result.data = pfrecord;
 
     return result;
+  },
+
+  //
+  /** ======================================================
+   *  SERVICE - PUT, updateprofile()
+   *  ====================================================== */
+
+  updateprofile: async (id, mname, memail, mpassword) => {
+    const result = {
+      status: null,
+      message: null,
+      data: null,
+    };
+
+    const filter = { _id: id };
+    const pfmember = await Member.find(filter);
+
+    if (!pfmember.length) {
+      const msg = "PROFILE doesnt exists in database.";
+      console.log("\nMember Console - " + msg);
+
+      result.status = 404;
+      result.message = "Member Message - " + msg;
+
+      return result;
+    } else {
+      const updatefields = {
+        name: mname,
+        email: memail,
+        password: mpassword,
+      };
+
+      await Member.findByIdAndUpdate(filter, updatefields);
+
+      const msg = "member PROFILE update SUCCESSFUL.";
+      console.log("\nAdmin Console - " + msg + "\n");
+      console.log(`Updated Name: ${mname}`);
+      console.log(`Updated Email: ${memail}`);
+      console.log(`Updated Password: ${mpassword}`);
+
+      result.status = 200;
+      result.message = "Admin Message - " + msg;
+      result.data = `Updated Name: ${mname}     Updated Email: ${memail}`;
+
+      return result;
+    }
+  },
+
+  //
+  /** ======================================================
+   *  SERVICE - PUT, checkout()
+   *  ====================================================== */
+  checkout: async (id, bid, btitle) => {
+    const result = {
+      status: null,
+      message: null,
+      data: null,
+    };
+
+    const filter = { _id: id };
+    const lnmember = await Member.find(filter);
+    const lnbook = await Book.find({ _id: bid });
+
+    if (!lnmember.length || !lnbook.length) {
+      const msg = "PROFILE or BOOK doesnt exists in database.";
+      console.log("\nMember Console - " + msg);
+
+      result.status = 404;
+      result.message = "Member Message - " + msg;
+
+      return result;
+    } else {
+      // Would have used $push or $addToSet, however these are not available in free-tier of Mongo Atlas
+      const createobj = {
+        _id: new mongoose.mongo.ObjectId(),
+        book_id: bid,
+        title: btitle,
+      };
+
+      let lnrecords = await Member.aggregate([
+        { $match: { _id: ObjectId(id) } },
+        { $unwind: "$loans" },
+        {
+          $project: {
+            _id: 1,
+            "loans._id": 1,
+            "loans.book_id": 1,
+            "loans.title": 1,
+            "loans.status": 1,
+            "loans.loandate": 1,
+            "loans.duedate": 1,
+            "loans.returndate": 1,
+          },
+        },
+      ]);
+
+      const queryLen = lnrecords.length;
+
+      lnrecords.forEach((element) => {
+        // Destructuring complex objects
+        const { _id: d1_id, loans: d2_loans } = element;
+        const {
+          _id: d2_loans_id,
+          book_id: d2_loans_bookid,
+          title: d2_loans_title,
+          status: d2_loans_status,
+          loandate: d2_loans_loand,
+          duedate: d2_loans_dued,
+          returndate: d2_loans_returnd,
+        } = d2_loans;
+
+        // Adding the same records back, as simplified objects so $set recognizes it later
+        lnrecords.push({
+          _id: d2_loans_id,
+          book_id: d2_loans_bookid,
+          title: d2_loans_title,
+          status: d2_loans_status,
+          loandate: d2_loans_loand,
+          duedate: d2_loans_dued,
+          returndate: d2_loans_returnd,
+        });
+      });
+
+      // Adding single item from cart
+      lnrecords.push(createobj);
+
+      // Removes the complex objects for reinsertion
+      lnrecords.splice(0, queryLen);
+
+      await Member.findByIdAndUpdate(filter, { $set: { loans: lnrecords } });
+
+      const msg = "member LOAN is SUCCESSFUL.";
+      console.log("\nAdmin Console - " + msg);
+      console.log(`Item loaned: "${btitle}"`);
+
+      result.status = 200;
+      result.message = "Admin Message - " + msg;
+      result.data = createobj;
+
+      return result;
+    }
   },
 };

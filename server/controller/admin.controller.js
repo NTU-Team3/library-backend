@@ -1,4 +1,3 @@
-const { chkmember, chkcollection } = require("../services/admin.service");
 const adminService = require("../services/admin.service");
 
 class AdminController {
@@ -9,7 +8,7 @@ class AdminController {
 
   //
   /** ======================================================
-   *  Controller - POST, addmembers()
+   *  CONTROLLER - GET "POST", addmembers()
    *  ====================================================== */
   async addmembers(req, res) {
     const { status, data, message } = await adminService.addmembers();
@@ -19,7 +18,7 @@ class AdminController {
 
   //
   /** ======================================================
-   *  Controller - DELETE, deletemembers()
+   *  CONTROLLER - GET "DELETE", deletemembers()
    *  ====================================================== */
   async deletemembers(req, res) {
     const { status, data, message } = await adminService.deletemembers();
@@ -29,13 +28,26 @@ class AdminController {
 
   //
   /** ======================================================
-   *  Controller - PUT, updatereservation()
+   *  CONTROLLER - GET "DELETE" & GET "POST", resetmembers()
    *  ====================================================== */
-  async updatereservations(req, res) {
-    const { status, data, message } = await adminService.updatereservations();
+  async resetmembers(req, res) {
+    const delm = await adminService.deletemembers();
+    const addm = await adminService.addmembers();
+
+    const { status, data, message } = await adminService.resetmembers(delm, addm);
     res.status(status);
     res.json({ message, data });
   }
+
+  //
+  /** ======================================================
+   *  CONTROLLER - DELETE, updatereservation()
+   *  ====================================================== */
+  // async updatereservations(req, res) {
+  //   const { status, data, message } = await adminService.updatereservations();
+  //   res.status(status);
+  //   res.json({ message, data });
+  // }
 }
 
 module.exports = AdminController;

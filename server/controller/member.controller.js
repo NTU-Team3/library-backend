@@ -5,46 +5,8 @@ class MemberController {
   // This is a class, which has methods:
 
   //
-  /* ----------------------------- LOAN -----------------------------
-
-          'viewloans()' - view all current loans
-          'updateloan()' - flips loan status of book - update "on loan" TO "returned", update returned date
-
-  //
-  /* ----------------------------- HISTORY -----------------------------
-
-          'viewhistories()' - view all histories 
-
- //
-  /* ----------------------------- RESERVATION -----------------------------
-
-          'createreservation()' - this is created by clicking a single-button/link on book single listing page, when ebook isnt available
-          'viewreservations()' - view all current reservations 
-
-  //
-  /* ----------------------------- REVIEW -----------------------------
-
-          'createreview()' - creates new entry for book review
-          'viewreviews()' - view all reviews
-          'updatereview()' - update single review - rating / comments 
-
-  //
-  /* ----------------------------- PROFILE -----------------------------
-
-          'createprofile()' - when a new member registers on the site
-          'viewprofile()' - view profile, before it gets edited 
-          'updateprofile()' - update member profile - name / email / password / profile pic
-
-  //
-  /* ----------------------------- CART -----------------------------
-
-          'viewcart()' - view all items in cart 
-          'checkout()' - when member clicks checkout on the cart page, creating a new loan record
-
-
-  //
   /** ======================================================
-   *  Controller - GET, viewloans()
+   *  CONTROLLER - GET, viewloans()
    *  ====================================================== */
   async viewloans(req, res) {
     const id = req.params.id;
@@ -61,7 +23,7 @@ class MemberController {
 
   //
   /** ======================================================
-   *  Controller - GET, viewreservationss()
+   *  CONTROLLER - GET, viewreservations()
    *  ====================================================== */
   async viewreservations(req, res) {
     const id = req.params.id;
@@ -78,7 +40,7 @@ class MemberController {
 
   //
   /** ======================================================
-   *  Controller - GET, viewhistories()
+   *  CONTROLLER - GET, viewhistories()
    *  ====================================================== */
   async viewhistories(req, res) {
     const id = req.params.id;
@@ -95,7 +57,7 @@ class MemberController {
 
   //
   /** ======================================================
-   *  Controller - GET, viewreviews()
+   *  CONTROLLER - GET, viewreviews()
    *  ====================================================== */
   async viewreviews(req, res) {
     const id = req.params.id;
@@ -112,7 +74,7 @@ class MemberController {
 
   //
   /** ======================================================
-   *  Controller - GET, viewprofile()
+   *  CONTROLLER - GET, viewprofile()
    *  ====================================================== */
   async viewprofile(req, res) {
     const id = req.params.id;
@@ -129,26 +91,48 @@ class MemberController {
 
   //
   /** ======================================================
-   *  Controller - PUT, editprofile()
+   *  CONTROLLER - PUT, updateprofile()
    *  ====================================================== */
-  async editprofile(req, res) {
-    const id = req.params.id;
-    const name = req.params.name;
-    const email = req.params.email;
-    const pwd = req.params.pwd;
-    const pic = req.params.pic;
+
+  async updateprofile(req, res) {
+    const { id, mname, memail, mpassword } = req.body;
+    const mailformat =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!ObjectId.isValid(id)) {
       res.status(400);
-      return res.send(`Controller (Edit Profile) - Invalid member id, typeof objectId expected.`);
+      return res.send(`Controller (Update Profile) - Invalid member id, typeof objectId expected.`);
     }
 
-    if (pwd < 4) {
+    if (!memail.match(mailformat)) {
       res.status(400);
-      return res.send(`Controller (Edit Profile) - Minimum password length is 4.`);
+      return res.send(`Controller (Update Profile) - Invalid format for email address.`);
     }
 
-    const { status, data, message } = await memberService.editProfile(id, name, email, pwd, pic);
+    const { status, data, message } = await memberService.updateprofile(id, mname, memail, mpassword);
+    res.status(status);
+    res.json({ message, data });
+  }
+
+  //
+  /** ======================================================
+   *  CONTROLLER - PUT, checkout()
+   *  ====================================================== */
+
+  async checkout(req, res) {
+    const { id, bid, btitle } = req.body;
+
+    if (!ObjectId.isValid(id) || !ObjectId.isValid(bid)) {
+      res.status(400);
+      return res.send(`Controller (Checkout) - Invalid member id or book id, typeof objectId expected.`);
+    }
+
+    if (typeof booktitle != "string") {
+      res.status(400);
+      return res.send(`Controller (Checkout) - Invalid title, typeof String expected.`);
+    }
+
+    const { status, data, message } = await memberService.checkout(id, bid, btitle);
     res.status(status);
     res.json({ message, data });
   }

@@ -6,9 +6,10 @@ const fsMember = fs.readFileSync("server/demodata/dd-members.json");
 const fsMemberJSON = JSON.parse(fsMember);
 
 module.exports = {
-  /*
-   'addmembers' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET "POST", addmembers()
+   *  ====================================================== */
   addmembers: async () => {
     const result = {
       status: null,
@@ -42,9 +43,10 @@ module.exports = {
     return result;
   },
 
-  /*
-   'deletemembers' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET "DELETE", deletemembers()
+   *  ====================================================== */
   deletemembers: async () => {
     const result = {
       status: null,
@@ -52,7 +54,6 @@ module.exports = {
       data: null,
     };
 
-    let arr = [];
     let exists = false;
     const collections = await mongoose.connection.db.listCollections().toArray();
 
@@ -66,10 +67,10 @@ module.exports = {
 
       result.status = 404;
       result.message = "Admin Message - " + msg;
-
       return result;
     }
 
+    let arr = [];
     const getmembers = await Member.find({ _id: fsMemberJSON });
 
     if (getmembers.length) {
@@ -98,7 +99,27 @@ module.exports = {
     }
   },
 
-  /*
-   'updatereservations' - SERVICE
-  */
+  //
+  /** ======================================================
+   *  SERVICE - GET "POST" & GET "DELETE", resetmembers()
+   *  ====================================================== */
+  resetmembers: async (delm, addm) => {
+    const result = {
+      status: null,
+      message: null,
+      data: null,
+    };
+
+    const msg = "RESET of demo data complete.";
+    console.log("\nAdmin Console - " + msg);
+
+    result.status = 404;
+    result.message = "Admin Message - " + msg;
+    return result;
+  },
+
+  //
+  /** ======================================================
+   *  SERVICE - PUT, updatereservation()
+   *  ====================================================== */
 };

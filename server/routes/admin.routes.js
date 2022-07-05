@@ -20,18 +20,23 @@ router.get("/admin", (req, res) => {
 
 //
 /** ======================================================
- *  Endpoint Routes - GET "POST", /admin/a-members, with addmembers()
+ *  ROUTES - GET "POST", /admin/a-members, with addmembers()
  *  ====================================================== */
 router.get("/admin/a-members/", adminController.addmembers);
 
 /** ======================================================
- *  Endpoint Routes - GET "DELETE", /admin/d-members, with deletemembers()
+ *  ROUTES- GET "DELETE", /admin/d-members, with deletemembers()
  *  ====================================================== */
 router.get("/admin/d-members/", adminController.deletemembers);
 
 /** ======================================================
- *  Endpoint Routes - PUT, /admin/u-reservations, with updatereservations()
+ *  ROUTES- GET "DELETE" & GET "POST", /admin/r-members, with resetmembers()
  *  ====================================================== */
-router.put("/admin/u-reservations/", adminController.updatereservations);
+router.get("/admin/r-members/", adminController.resetmembers);
+
+/** ======================================================
+ *  ROUTES - PUT, /admin/u-reservations, with updatereservations()
+ *  ====================================================== */
+// router.put("/admin/u-reservations/", adminController.updatereservations);
 
 module.exports = router;
