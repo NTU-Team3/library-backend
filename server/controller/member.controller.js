@@ -176,25 +176,28 @@ class MemberController {
   async checkout(req, res) {
     const cartarr = req.body;
 
-    const jsoncartarr = JSON.stringify(cartarr);
-    const firstchar = jsoncartarr.charAt(0);
-    const lastchar = jsoncartarr.charAt(jsoncartarr.length - 1);
-
     if (cartarr.length > 0) {
-      cartarr.forEach((item) => {
-        if (!ObjectId.isValid(item.id) || !ObjectId.isValid(item.bid)) {
+      for (let i = 0; i < cartarr.length; i++) {
+        if (!ObjectId.isValid(cartarr[i].id) || !ObjectId.isValid(cartarr[i].bid)) {
           res.status(400);
           return res.send(`Controller (checkout) - Invalid member id or book id, typeof objectId expected.`);
         }
-        if (typeof item.btitle != "string") {
+
+        if (typeof cartarr[i].btitle != "string") {
           res.status(400);
           return res.send(`Controller (checkout) - Invalid title, typeof String expected.`);
         }
-      });
-    } else if (firstchar != "[" && lastchar != "]") {
-      res.status(400);
-      return res.send(`Controller (checkout) - Invalid input, objects are to be braced within an array "[]".`);
+      }
     } else {
+      const jsoncartarr = JSON.stringify(cartarr);
+      const firstchar = jsoncartarr.charAt(0);
+      const lastchar = jsoncartarr.charAt(jsoncartarr.length - 1);
+
+      if ((firstchar != "[" && lastchar != "]") || typeof cartarr.length === undefined) {
+        res.status(400);
+        return res.send(`Controller (checkout) - Invalid input, objects must be braced within an array "[]".`);
+      }
+
       res.status(400);
       return res.send(`Controller (checkout) - Invalid cart, at least one item expected.`);
     }

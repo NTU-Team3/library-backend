@@ -321,7 +321,13 @@ module.exports = {
       data: null,
     };
 
-    const rvmember = await Member.find({ _id: id });
+    const filter = { _id: id };
+    const updatefields = {
+      rating: rrating,
+      comments: rcomments,
+    };
+
+    const rvmember = await Member.find(filter);
 
     if (!rvmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -333,57 +339,26 @@ module.exports = {
       return result;
     }
 
-    const rvrecords = await Member.aggregate([
-      { $match: { _id: ObjectId(id) } },
-      { $unwind: "$reviews" },
-      { $match: { "reviews._id": ObjectId(rid) } },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          "reviews._id": 1,
-          "reviews.book_id": 1,
-          "reviews.title": 1,
-          "reviews.rating": 1,
-          "reviews.comments": 1,
-          "reviews.reviewdate": 1,
-        },
-      },
-      {
-        $set: {
-          "reviews.rating": rrating,
-          "reviews.comments": rcomments,
-          "reviews.reviewdate": new Date(),
-        },
-      },
-    ]);
+    //const t = await Member.find({ reviews: { $elemMatch: { _id: mongoose.Types.ObjectId(rid) } } })};
+    const tt = await Member.find({ reviews: { $elemMatch: { _id: mongoose.Types.ObjectId(rid) } } });
 
-    console.log(rvrecords);
+    //       { $set: { "reviews.rating": rrating } },
+    // { $set: { name: "rratings" } }
 
-    const filter = { _id: id };
-    const filter2 = { "reviews._id": rid };
-    const updatefields = {
-      rating: rrating,
-      comments: rcomments,
-    };
+    console.log(tt);
+    //const t = await Member.find({ reviews: { $elemMatch: { _id: mongoose.Types.ObjectId(rid) } } });
 
-    // await Member.findOneAndUpdate(filter, updatefields);
-    const t = await Member.find(filter2);
-    console.log(...t);
+    // if (!rvrecords.length) {
+    //   const msg = "this REVIEW does NOT EXIST in the database.";
+    //   console.log("\nMember Console - " + msg);
 
-    await Member.findOneAndUpdate(filter2, updatefields);
+    //   result.status = 404;
+    //   result.message = "Member Message - " + msg;
 
-    if (!rvrecords.length) {
-      const msg = "this REVIEW does NOT EXIST in the database.";
-      console.log("\nMember Console - " + msg);
+    //   return result;
+    // }
 
-      result.status = 404;
-      result.message = "Member Message - " + msg;
-
-      return result;
-    }
-
-    const msg = `REVIEW update SUCCESSFUL for "TITLE".`;
+    const msg = `REVIEW update SUCCESSFUL for "TITLEXX".`;
     console.log("\nMember Console - " + msg);
     console.log(`Updated rating: ${rrating}\nUpdated comments: ${rcomments}`);
 
@@ -453,7 +428,7 @@ module.exports = {
       const titlearr = [];
       const dataarr = [];
 
-      for (i = 0; i < cartarr.length; i++) {
+      for (let i = 0; i < cartarr.length; i++) {
         const id = cartarr[i].id;
         const bid = cartarr[i].bid;
         const btitle = cartarr[i].btitle;
@@ -468,6 +443,7 @@ module.exports = {
 
           result.status = 404;
           result.message = "Member Message - " + msg;
+          return result;
         } else {
           // Would have used $push or $addToSet, however these are not available in free-tier of Mongo Atlas
           // Below is the workaround solution proposed:
@@ -538,7 +514,7 @@ module.exports = {
       }
       const msg = "member LOAN is SUCCESSFUL.";
       console.log("\nAdmin Console - " + msg);
-      console.log(`Item/s loaned:\n\n${titlearr.join("\n")}`);
+      console.log(`Item/s loaned:\n\n- ${titlearr.join("\n- ")}`);
 
       result.status = 200;
       result.message = "Admin Message - " + msg;
@@ -557,4 +533,3 @@ module.exports = {
     }
   },
 };
-//
