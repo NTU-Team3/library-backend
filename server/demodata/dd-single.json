@@ -1,8 +1,8 @@
 [
   {
     "_id": { "$oid": "62bb5207127ffb266882da99" },
-    "name": "test",
-    "email": "test@mail.com",
+    "name": "TEST USER",
+    "email": "test_user@mail.com",
     "password": "00000000",
     "profilepic": "https://media.istockphoto.com/photos/illustration-of-smiling-happy-man-with-laptop-sitting-in-armchair-picture-id1226886130?s=612x612",
     "outstandingfines": { "$numberDecimal": "0" },
