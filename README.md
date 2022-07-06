@@ -9,7 +9,7 @@
 | Verb               | Path             | Functions                | Description                                                                                          |
 | ------------------ | ---------------- | ------------------------ | ---------------------------------------------------------------------------------------------------- |
 | GET (POST)         | /admin/a-members | addmembers()             | - adds demo data of 5 members, collection is created if not existant                                 |
-| GET (DELETE)       | /admin/d-members | deletemembers()          | - deletes demo data based on \_ids of same 5 members from addmembers()                               |
+| GET (DELETE)       | /admin/d-members | deletemembers()          | - deletes demo data based on \_ids of same 5 members, from addmembers()                              |
 | GET (DELETE, POST) | /admin/r-members | resetmembers(delm, addm) | - resets the demo date with callback functions, first calls deletemember(), followed by addmembers() |
 
 &nbsp;
@@ -17,17 +17,17 @@
 
 ### 🚩 _/member_
 
-| Verb | Path                             | Functions          | Description                                                                                                     | Refinement Stage                    |
-| ---- | -------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| GET  | /member/v-loans/:memberid        | viewloans()        | - view all loans                                                                                                |                                     |
-| ⬆️   | /member/v-reservations/:memberid | viewreservations() | - view all histories                                                                                            |                                     |
-| ⬆️   | /member/v-histories/:memberid    | viewhistories()    | - view all reservations                                                                                         |                                     |
-| ⬆️   | /member/v-reviews/:memberid      | viewreviews()      | - view all reviews                                                                                              |                                     |
-| ⬆️   | /member/v-profile/:memberid      | viewprofile()      | - view editable profile info                                                                                    |                                     |
-| PUT  | /member/u-loans/                 | updateloans()      | - update single loan status of book - refreshes "On Loan" to "Returned", refreshes "returndate" to current date |                                     |
-| ⬆️   | /member/u-reviews/               | updatereviews()    | - update single review - refreshes "rating" / "comments" / "reviewdate"                                         |                                     |
-| ⬆️   | /member/u-profile/               | updateprofile()    | - update member profile - refreshes "name" / "email" / "password"                                               | - Implement hashing on pwd          |
-| ⬆️   | /member/checkout                 | checkout()         | - creates a single new loan record, when member clicks checkout on the cart page                                | - Add multiple loan records at once |
+| Verb | Path                             | Functions          | Description                                                                                                     | Comments         |
+| ---- | -------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------- |
+| GET  | /member/v-loans/:memberid        | viewloans()        | - view all loans                                                                                                |                  |
+| ⬆️   | /member/v-reservations/:memberid | viewreservations() | - view all histories                                                                                            |                  |
+| ⬆️   | /member/v-histories/:memberid    | viewhistories()    | - view all reservations                                                                                         |                  |
+| ⬆️   | /member/v-reviews/:memberid      | viewreviews()      | - view all reviews                                                                                              |                  |
+| ⬆️   | /member/v-profile/:memberid      | viewprofile()      | - view editable profile info                                                                                    |                  |
+| PUT  | /member/u-loans/                 | updateloans()      | - update single loan status of book - refreshes "On Loan" to "Returned", refreshes "returndate" to current date | - In Progress    |
+| ⬆️   | /member/u-reviews/               | updatereviews()    | - update single review - refreshes "rating" / "comments" / "reviewdate"                                         | - In Progress    |
+| ⬆️   | /member/u-profile/               | updateprofile()    | - update member profile - refreshes "name" / "email" / "password"                                               | - Hashing on pwd |
+| ⬆️   | /member/checkout                 | checkout()         | - creates single or multiple loan records, when member clicks checkout on the cart page                         |                  |
 
 &nbsp;
 &nbsp;
