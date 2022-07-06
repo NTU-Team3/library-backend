@@ -180,9 +180,6 @@ class MemberController {
     const firstchar = jsoncartarr.charAt(0);
     const lastchar = jsoncartarr.charAt(jsoncartarr.length - 1);
 
-    console.log(firstchar);
-    console.log(lastchar);
-
     if (cartarr.length > 0) {
       cartarr.forEach((item) => {
         if (!ObjectId.isValid(item.id) || !ObjectId.isValid(item.bid)) {
