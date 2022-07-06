@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Member = require("../model/Member");
-
 const fs = require("fs");
 const fsMember = fs.readFileSync("server/demodata/dd-members.json");
 const fsMemberJSON = JSON.parse(fsMember);
@@ -113,7 +112,7 @@ module.exports = {
     const msg = "RESET of demo data complete.";
     console.log("\nAdmin Console - " + msg);
 
-    result.status = 404;
+    result.status = 200;
     result.message = "Admin Message - " + msg;
     return result;
   },
