@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
 const Member = require("../model/Member");
 const Book = require("../model/Book");
-const { json } = require("express");
 
 module.exports = {
   //
@@ -37,6 +36,7 @@ module.exports = {
         $project: {
           _id: 1,
           name: 1,
+          "loans._id": 1,
           "loans.status": 1,
           "loans.book_id": 1,
           "loans.title": 1,
@@ -97,6 +97,7 @@ module.exports = {
         $project: {
           _id: 1,
           name: 1,
+          "reservations._id": 1,
           "reservations.title": 1,
           "reservations.status": 1,
           "reservations.latestpickup": 1,
@@ -156,11 +157,13 @@ module.exports = {
         $project: {
           _id: 1,
           name: 1,
+          "loans._id": 1,
           "loans.status": 1,
           "loans.book_id": 1,
           "loans.title": 1,
           "loans.duedate": 1,
           "loans.startdate": 1,
+          "loans.returndate": 1,
         },
       },
     ]);
@@ -217,6 +220,7 @@ module.exports = {
         $project: {
           _id: 1,
           name: 1,
+          "reviews._id": 1,
           "reviews.title": 1,
           "reviews.rating": 1,
           "reviews.comments": 1,
@@ -332,6 +336,8 @@ module.exports = {
       { $match: { "reviews._id": ObjectId(rid) } },
       {
         $project: {
+          _id: 1,
+          name: 1,
           "reviews._id": 1,
           "reviews.book_id": 1,
           "reviews.title": 1,
@@ -350,6 +356,19 @@ module.exports = {
     ]);
 
     console.log(rvrecords);
+
+    const filter = { _id: id };
+    const filter2 = { "reviews._id": rid };
+    const updatefields = {
+      rating: rrating,
+      comments: rcomments,
+    };
+
+    // await Member.findOneAndUpdate(filter, updatefields);
+    const t = await Member.find(filter2);
+    console.log(...t);
+
+    await Member.findOneAndUpdate(filter2, updatefields);
 
     if (!rvrecords.length) {
       const msg = "this REVIEW does NOT EXIST in the database.";
@@ -455,6 +474,7 @@ module.exports = {
         {
           $project: {
             _id: 1,
+            name: 1,
             "loans._id": 1,
             "loans.book_id": 1,
             "loans.title": 1,
@@ -466,38 +486,39 @@ module.exports = {
         },
       ]);
 
+      // Query the original length of array, before we start tweaking it
       const queryLen = lnrecords.length;
 
       lnrecords.forEach((element) => {
         // Destructuring complex objects
-        const { _id: d1_id, loans: d2_loans } = element;
+        const { _id: d1_id, name: d2_name, loans: d3_loans } = element;
         const {
-          _id: d2_loans_id,
-          book_id: d2_loans_bookid,
-          title: d2_loans_title,
-          status: d2_loans_status,
-          loandate: d2_loans_loand,
-          duedate: d2_loans_dued,
-          returndate: d2_loans_returnd,
-        } = d2_loans;
+          _id: d3_loans_id,
+          book_id: d3_loans_bookid,
+          title: d3_loans_title,
+          status: d3_loans_status,
+          loandate: d3_loans_loand,
+          duedate: d3_loans_dued,
+          returndate: d3_loans_returnd,
+        } = d3_loans;
 
         // Adding the same records back, as simplified objects so $set recognizes it later
         lnrecords.push({
-          _id: d2_loans_id,
-          book_id: d2_loans_bookid,
-          title: d2_loans_title,
-          status: d2_loans_status,
-          loandate: d2_loans_loand,
-          duedate: d2_loans_dued,
-          returndate: d2_loans_returnd,
+          _id: d3_loans_id,
+          book_id: d3_loans_bookid,
+          title: d3_loans_title,
+          status: d3_loans_status,
+          loandate: d3_loans_loand,
+          duedate: d3_loans_dued,
+          returndate: d3_loans_returnd,
         });
       });
 
-      // Adding single item from cart
-      lnrecords.push(createobj);
-
       // Removes the complex objects for reinsertion, these are currently "unwanted duplicates"
       lnrecords.splice(0, queryLen);
+
+      // Adding the single new loan item from cart
+      lnrecords.push(createobj);
 
       await Member.findByIdAndUpdate(filter, { $set: { loans: lnrecords } });
 
