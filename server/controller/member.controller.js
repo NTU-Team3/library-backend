@@ -180,6 +180,9 @@ class MemberController {
     const firstchar = jsoncartarr.charAt(0);
     const lastchar = jsoncartarr.charAt(jsoncartarr.length - 1);
 
+    console.log(firstchar);
+    console.log(lastchar);
+
     if (cartarr.length > 0) {
       cartarr.forEach((item) => {
         if (!ObjectId.isValid(item.id) || !ObjectId.isValid(item.bid)) {
@@ -191,7 +194,7 @@ class MemberController {
           return res.send(`Controller (checkout) - Invalid title, typeof String expected.`);
         }
       });
-    } else if (firstchar != "[" && firstchar != "]") {
+    } else if (firstchar != "[" && lastchar != "]") {
       res.status(400);
       return res.send(`Controller (checkout) - Invalid input, objects are to be braced within an array "[]".`);
     } else {
