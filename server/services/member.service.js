@@ -15,8 +15,7 @@ module.exports = {
       data: null,
     };
 
-    const lnmember = await Member.find({ _id: id });
-    console.log(lnmember);
+    const lnmember = await Member.find({ _id: id }, "_id name");
 
     if (!lnmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -52,6 +51,7 @@ module.exports = {
 
       result.status = 404;
       result.message = "Member Message - " + msg;
+      result.data = lnmember;
 
       return result;
     }
@@ -78,7 +78,7 @@ module.exports = {
       data: null,
     };
 
-    const rsmember = await Member.find({ _id: id });
+    const rsmember = await Member.find({ _id: id }, "_id name");
 
     if (!rsmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -111,6 +111,7 @@ module.exports = {
 
       result.status = 404;
       result.message = "Member Message - " + msg;
+      result.data = rsmember;
 
       return result;
     }
@@ -137,7 +138,7 @@ module.exports = {
       data: null,
     };
 
-    const hsmember = await Member.find({ _id: id });
+    const hsmember = await Member.find({ _id: id }, "_id name");
 
     if (!hsmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -174,6 +175,7 @@ module.exports = {
 
       result.status = 404;
       result.message = "Member Message - " + msg;
+      result.data = hsmember;
 
       return result;
     }
@@ -191,7 +193,7 @@ module.exports = {
 
   //
   /** ======================================================
-   *  SERVICE - GET, viewreviews())
+   *  SERVICE - GET, viewreviews()
    *  ====================================================== */
 
   viewreviews: async (id) => {
@@ -201,7 +203,7 @@ module.exports = {
       data: null,
     };
 
-    const rvmember = await Member.find({ _id: id });
+    const rvmember = await Member.find({ _id: id }, "_id name");
 
     if (!rvmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -235,6 +237,7 @@ module.exports = {
 
       result.status = 404;
       result.message = "Member Message - " + msg;
+      result.data = rvmember;
 
       return result;
     }
@@ -286,7 +289,7 @@ module.exports = {
 
   //
   /** ======================================================
-   *  SERVICE - PUT, updateloans()
+   *  SERVICE - PUT, updateloans() ***** WIP *****
    *  ====================================================== */
 
   updateloans: async (id, bid) => {
@@ -309,7 +312,7 @@ module.exports = {
 
   //
   /** ======================================================
-   *  SERVICE - PUT, updatereviews()
+   *  SERVICE - PUT, updatereviews() ***** WIP *****
    *  ====================================================== */
   updatereviews: async (id, rid, rrating, rcomments) => {
     const result = {
@@ -447,6 +450,9 @@ module.exports = {
     };
 
     if (cartarr.length > 0) {
+      const titlearr = [];
+      const dataarr = [];
+
       for (i = 0; i < cartarr.length; i++) {
         const id = cartarr[i].id;
         const bid = cartarr[i].bid;
@@ -462,8 +468,6 @@ module.exports = {
 
           result.status = 404;
           result.message = "Member Message - " + msg;
-
-          return result;
         } else {
           // Would have used $push or $addToSet, however these are not available in free-tier of Mongo Atlas
           // Below is the workaround solution proposed:
@@ -523,31 +527,33 @@ module.exports = {
           // Removes the complex objects for reinsertion, these are currently "unwanted duplicates"
           lnrecords.splice(0, queryLen);
 
-          // Adding the single new loan item from cart
+          // Adding single new loan item from cart[i]
           lnrecords.push(createobj);
 
           await Member.findByIdAndUpdate(filter, { $set: { loans: lnrecords } });
 
-          const msg = "member LOAN is SUCCESSFUL.";
-          console.log("\nAdmin Console - " + msg);
-          console.log(`Item loaned: "${btitle}"`);
-
-          result.status = 200;
-          result.message = "Admin Message - " + msg;
-          result.data = createobj;
-
-          return result;
+          titlearr.push(btitle);
+          dataarr.push(createobj);
         }
       }
+      const msg = "member LOAN is SUCCESSFUL.";
+      console.log("\nAdmin Console - " + msg);
+      console.log(`Item/s loaned:\n\n${titlearr.join("\n")}`);
+
+      result.status = 200;
+      result.message = "Admin Message - " + msg;
+      result.data = dataarr;
+
+      return result;
+    } else {
+      const msg = "CHECKOUT transcation FAILED, no items were carted out.";
+      console.log("\nAdmin Console - " + msg);
+
+      result.status = 404;
+      result.message = "Admin Message - " + msg;
+      result.data = null;
+
+      return result;
     }
-
-    const msg = "CHECKOUT transcation FAILED, no items were carted out.";
-    console.log("\nAdmin Console - " + msg);
-
-    result.status = 404;
-    result.message = "Admin Message - " + msg;
-    result.data = null;
-
-    return result;
   },
 };
