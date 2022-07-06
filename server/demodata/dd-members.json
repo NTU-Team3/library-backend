@@ -3,7 +3,7 @@
     "_id": "62bb5207127ffb266882da91",
     "name": "ikoh",
     "email": "ikoh@mail.com",
-    "password": "11111111",
+    "password": "1111",
     "profilepic": "https://icon-library.com/images/icon-avatars/icon-avatars-12.jpg",
     "outstandingfines": 5.1,
     "loans": [
@@ -88,7 +88,7 @@
     "_id": "62bb5207127ffb266882da92",
     "name": "swchee",
     "email": "swchee@mail.com",
-    "password": "22222222",
+    "password": "2222",
     "profilepic": "http://carismartes.com.br/assets/global/images/avatars/avatar5_big@2x.png",
     "outstandingfines": 1.9,
     "loans": [
@@ -137,7 +137,7 @@
     "_id": "62bb5207127ffb266882da93",
     "name": "rlau",
     "email": "rlau@mail.com",
-    "password": "33333333",
+    "password": "3333",
     "loans": [
       {
         "_id": "62bdcff38123caa7ef1df03a",
@@ -154,7 +154,7 @@
     "_id": "62bb5207127ffb266882da94",
     "name": "sbahri",
     "email": "sbahri@mail.com",
-    "password": "44444444",
+    "password": "4444",
     "reservations": [
       {
         "_id": "62bdcff38123caa7ef1df04e",
@@ -170,6 +170,6 @@
     "_id": "62bb5207127ffb266882da95",
     "name": "kmsheng",
     "email": "kmshengmail.com",
-    "password": "55555555"
+    "password": "5555"
   }
 ]
