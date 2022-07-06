@@ -1,3 +1,10 @@
+
+
+
+
+http://localhost:3000/member/u-reviews
+
+
 {
   "id": "62bb5207127ffb266882da91",
   "rid": "62bdcff38123caa7ef1df11b",

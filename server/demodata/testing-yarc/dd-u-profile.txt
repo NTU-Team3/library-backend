@@ -1,15 +1,22 @@
 
+
+
+
+http://localhost:3000/member/u-profile
+
+
   {
     "id": "62bb5207127ffb266882da99",
     "mname": "1234 5678",
     "memail": "1234@mail.com",
-    "mpassword": "12345678"
+    "mpassword": "1234"
   }
+
 
   {
     "id": "62bb5207127ffb266882da99",
     "mname": "TEST USER",
     "memail": "test_user@mail.com",
-    "mpassword": "00000000"
+    "mpassword": "0000"
   }
 
