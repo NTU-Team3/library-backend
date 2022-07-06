@@ -439,98 +439,115 @@ module.exports = {
   /** ======================================================
    *  SERVICE - PUT, checkout()
    *  ====================================================== */
-  checkout: async (id, bid, btitle) => {
+  checkout: async (cartarr) => {
     const result = {
       status: null,
       message: null,
       data: null,
     };
 
-    const filter = { _id: id };
-    const lnmember = await Member.find(filter);
-    const lnbook = await Book.find({ _id: bid });
+    if (cartarr.length > 0) {
+      for (i = 0; i < cartarr.length; i++) {
+        const id = cartarr[i].id;
+        const bid = cartarr[i].bid;
+        const btitle = cartarr[i].btitle;
 
-    if (!lnmember.length || !lnbook.length) {
-      const msg = "PROFILE or BOOK doesnt exists in database.";
-      console.log("\nMember Console - " + msg);
+        const filter = { _id: id };
+        const lnmember = await Member.find(filter);
+        const lnbook = await Book.find({ _id: bid });
 
-      result.status = 404;
-      result.message = "Member Message - " + msg;
+        if (!lnmember.length || !lnbook.length) {
+          const msg = "PROFILE or BOOK doesnt exists in database.";
+          console.log("\nMember Console - " + msg);
 
-      return result;
-    } else {
-      // Would have used $push or $addToSet, however these are not available in free-tier of Mongo Atlas
-      // Below is the workaround solution proposed:
+          result.status = 404;
+          result.message = "Member Message - " + msg;
 
-      const createobj = {
-        _id: new mongoose.mongo.ObjectId(),
-        book_id: bid,
-        title: btitle,
-      };
+          return result;
+        } else {
+          // Would have used $push or $addToSet, however these are not available in free-tier of Mongo Atlas
+          // Below is the workaround solution proposed:
 
-      let lnrecords = await Member.aggregate([
-        { $match: { _id: ObjectId(id) } },
-        { $unwind: "$loans" },
-        {
-          $project: {
-            _id: 1,
-            name: 1,
-            "loans._id": 1,
-            "loans.book_id": 1,
-            "loans.title": 1,
-            "loans.status": 1,
-            "loans.loandate": 1,
-            "loans.duedate": 1,
-            "loans.returndate": 1,
-          },
-        },
-      ]);
+          const createobj = {
+            _id: new mongoose.mongo.ObjectId(),
+            book_id: bid,
+            title: btitle,
+          };
 
-      // Query the original length of array, before we start tweaking it
-      const queryLen = lnrecords.length;
+          let lnrecords = await Member.aggregate([
+            { $match: { _id: ObjectId(id) } },
+            { $unwind: "$loans" },
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                "loans._id": 1,
+                "loans.book_id": 1,
+                "loans.title": 1,
+                "loans.status": 1,
+                "loans.loandate": 1,
+                "loans.duedate": 1,
+                "loans.returndate": 1,
+              },
+            },
+          ]);
 
-      lnrecords.forEach((element) => {
-        // Destructuring complex objects
-        const { _id: d1_id, name: d2_name, loans: d3_loans } = element;
-        const {
-          _id: d3_loans_id,
-          book_id: d3_loans_bookid,
-          title: d3_loans_title,
-          status: d3_loans_status,
-          loandate: d3_loans_loand,
-          duedate: d3_loans_dued,
-          returndate: d3_loans_returnd,
-        } = d3_loans;
+          // Query the original length of array, before we start tweaking it
+          const queryLen = lnrecords.length;
 
-        // Adding the same records back, as simplified objects so $set recognizes it later
-        lnrecords.push({
-          _id: d3_loans_id,
-          book_id: d3_loans_bookid,
-          title: d3_loans_title,
-          status: d3_loans_status,
-          loandate: d3_loans_loand,
-          duedate: d3_loans_dued,
-          returndate: d3_loans_returnd,
-        });
-      });
+          lnrecords.forEach((element) => {
+            // Destructuring complex objects
+            const { _id: d1_id, name: d2_name, loans: d3_loans } = element;
+            const {
+              _id: d3_loans_id,
+              book_id: d3_loans_bookid,
+              title: d3_loans_title,
+              status: d3_loans_status,
+              loandate: d3_loans_loand,
+              duedate: d3_loans_dued,
+              returndate: d3_loans_returnd,
+            } = d3_loans;
 
-      // Removes the complex objects for reinsertion, these are currently "unwanted duplicates"
-      lnrecords.splice(0, queryLen);
+            // Adding the same records back, as simplified objects so $set recognizes it later
+            lnrecords.push({
+              _id: d3_loans_id,
+              book_id: d3_loans_bookid,
+              title: d3_loans_title,
+              status: d3_loans_status,
+              loandate: d3_loans_loand,
+              duedate: d3_loans_dued,
+              returndate: d3_loans_returnd,
+            });
+          });
 
-      // Adding the single new loan item from cart
-      lnrecords.push(createobj);
+          // Removes the complex objects for reinsertion, these are currently "unwanted duplicates"
+          lnrecords.splice(0, queryLen);
 
-      await Member.findByIdAndUpdate(filter, { $set: { loans: lnrecords } });
+          // Adding the single new loan item from cart
+          lnrecords.push(createobj);
 
-      const msg = "member LOAN is SUCCESSFUL.";
-      console.log("\nAdmin Console - " + msg);
-      console.log(`Item loaned: "${btitle}"`);
+          await Member.findByIdAndUpdate(filter, { $set: { loans: lnrecords } });
 
-      result.status = 200;
-      result.message = "Admin Message - " + msg;
-      result.data = createobj;
+          const msg = "member LOAN is SUCCESSFUL.";
+          console.log("\nAdmin Console - " + msg);
+          console.log(`Item loaned: "${btitle}"`);
 
-      return result;
+          result.status = 200;
+          result.message = "Admin Message - " + msg;
+          result.data = createobj;
+
+          return result;
+        }
+      }
     }
+
+    const msg = "CHECKOUT transcation FAILED, no items were carted out.";
+    console.log("\nAdmin Console - " + msg);
+
+    result.status = 404;
+    result.message = "Admin Message - " + msg;
+    result.data = null;
+
+    return result;
   },
 };

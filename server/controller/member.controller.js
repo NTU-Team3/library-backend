@@ -174,19 +174,32 @@ class MemberController {
    *  ====================================================== */
 
   async checkout(req, res) {
-    const { id, bid, btitle } = req.body;
+    const cartarr = req.body;
 
-    if (!ObjectId.isValid(id) || !ObjectId.isValid(bid)) {
+    const jsoncartarr = JSON.stringify(cartarr);
+    const firstchar = jsoncartarr.charAt(0);
+    const lastchar = jsoncartarr.charAt(jsoncartarr.length - 1);
+
+    if (cartarr.length > 0) {
+      cartarr.forEach((item) => {
+        if (!ObjectId.isValid(item.id) || !ObjectId.isValid(item.bid)) {
+          res.status(400);
+          return res.send(`Controller (checkout) - Invalid member id or book id, typeof objectId expected.`);
+        }
+        if (typeof item.btitle != "string") {
+          res.status(400);
+          return res.send(`Controller (checkout) - Invalid title, typeof String expected.`);
+        }
+      });
+    } else if (firstchar != "[" && firstchar != "]") {
       res.status(400);
-      return res.send(`Controller (checkout) - Invalid member id or book id, typeof objectId expected.`);
+      return res.send(`Controller (checkout) - Invalid input, objects are to be braced within an array "[]".`);
+    } else {
+      res.status(400);
+      return res.send(`Controller (checkout) - Invalid cart, at least one item expected.`);
     }
 
-    if (typeof btitle != "string") {
-      res.status(400);
-      return res.send(`Controller (checkout) - Invalid title, typeof String expected.`);
-    }
-
-    const { status, data, message } = await memberService.checkout(id, bid, btitle);
+    const { status, data, message } = await memberService.checkout(cartarr);
     res.status(status);
     res.json({ message, data });
   }
