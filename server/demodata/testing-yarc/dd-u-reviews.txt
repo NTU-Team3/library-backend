@@ -4,10 +4,28 @@
 
 http://localhost:3000/member/u-reviews
 
+{
+  "id": "62bb5207127ffb266882da91",
+  "rid": "62bdcff38123caa7ef1df11a",
+  "btitle": "Spark of Genius",
+  "rrating": 4.4,
+  "rcomments": "Going in for a second read!"
+}
+
 
 {
   "id": "62bb5207127ffb266882da91",
   "rid": "62bdcff38123caa7ef1df11b",
-  "rrating": 4.4,
-  "rcomments": "Going in for a second read!"
+  "btitle": "Tree and Leaf: Including MYTHOPOEIA",
+  "rrating": 4.9,
+  "rcomments": "Cant wait for the second part to be released!"
+}
+
+
+{
+  "id": "62bb5207127ffb266882da92",
+  "rid": "62bdcff38123caa7ef1df02d",
+  "btitle": "How to Stop Worrying and Start Living",
+  "rrating": 4.1,
+  "rcomments": "An enriching read, suited for everyone with the state of our current world."
 }
