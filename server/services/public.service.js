@@ -181,6 +181,8 @@ module.exports = {
           rating: 1,
           desc: 1,
           reviews: 1,
+          thumbnail: 1,
+          globalrating: 1,
           /* "reviews.owner": 1,
           "reviews.rating": 1,
           "reviews.date": 1,
