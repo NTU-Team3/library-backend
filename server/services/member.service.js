@@ -15,7 +15,9 @@ module.exports = {
       data: null,
     };
 
-    const lnmember = await Member.find({ _id: id }, "_id name");
+    const filter = { _id: id };
+    const fields = "_id name";
+    const lnmember = await Member.find(filter, fields);
 
     if (!lnmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -78,7 +80,9 @@ module.exports = {
       data: null,
     };
 
-    const rsmember = await Member.find({ _id: id }, "_id name");
+    const filter = { _id: id };
+    const fields = "_id name";
+    const rsmember = await Member.find(filter, fields);
 
     if (!rsmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -138,7 +142,9 @@ module.exports = {
       data: null,
     };
 
-    const hsmember = await Member.find({ _id: id }, "_id name");
+    const filter = { _id: id };
+    const fields = "_id name";
+    const hsmember = await Member.find(filter, fields);
 
     if (!hsmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -162,8 +168,8 @@ module.exports = {
           "loans.status": 1,
           "loans.book_id": 1,
           "loans.title": 1,
+          "loans.loandate": 1,
           "loans.duedate": 1,
-          "loans.startdate": 1,
           "loans.returndate": 1,
         },
       },
@@ -203,7 +209,9 @@ module.exports = {
       data: null,
     };
 
-    const rvmember = await Member.find({ _id: id }, "_id name");
+    const filter = { _id: id };
+    const fields = "_id name";
+    const rvmember = await Member.find(filter, fields);
 
     if (!rvmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -264,7 +272,9 @@ module.exports = {
       data: null,
     };
 
-    const pfrecord = await Member.find({ _id: id }, "name email password");
+    const filter = { _id: id };
+    const fields = "name email password";
+    const pfrecord = await Member.find(filter, fields);
 
     if (!pfrecord.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -289,23 +299,63 @@ module.exports = {
 
   //
   /** ======================================================
-   *  SERVICE - PUT, updateloans() ***** WIP *****
+   *  SERVICE - PUT, updateloans()
    *  ====================================================== */
 
-  updateloans: async (id, bid) => {
+  updateloans: async (id, lid, btitle) => {
     const result = {
       status: null,
       message: null,
       data: null,
     };
 
-    const msg = "LOAN update SUCCESSFUL.";
+    const filter = { _id: id };
+    const fields = "_id name";
+    const lstatus = "Returned";
+    const lmember = await Member.find(filter, fields);
+
+    if (!lmember.length) {
+      const msg = "PROFILE doesnt exists in database.";
+      console.log("\nMember Console - " + msg);
+
+      result.status = 404;
+      result.message = "Member Message - " + msg;
+
+      return result;
+    }
+
+    const lrecords = await Member.aggregate([{ $match: { _id: ObjectId(id) } }, { $unwind: "$loans" }, { $match: { "loans._id": ObjectId(lid) } }]);
+
+    if (!lrecords.length) {
+      const msg = `this LOAN '${lid}' from member '${id}' does NOT EXIST in the database.`;
+      console.log("\nMember Console - " + msg);
+
+      result.status = 404;
+      result.message = "Member Message - " + msg;
+
+      return result;
+    }
+
+    await Member.findOneAndUpdate(
+      filter,
+      {
+        $set: {
+          "loans.$[lid].status": lstatus,
+          "loans.$[lid].returndate": new Date(),
+        },
+      },
+      {
+        arrayFilters: [{ "lid._id": ObjectId(lid) }],
+      }
+    );
+
+    const msg = `LOAN return SUCCESSFUL for '${lmember[0].name}'.`;
     console.log("\nMember Console - " + msg);
-    console.log("service layer - work in progress");
+    console.log(`\nTitle: ${btitle}\nStatus: ${lstatus}\nReturn date: ${new Date().toDateString()}`);
 
     result.status = 200;
     result.message = "Member Message - " + msg;
-    result.data = "service layer - work in progress";
+    result.data = `Title: ${btitle}          Status: ${lstatus}          Return date: ${new Date().toDateString()}`;
 
     return result;
   },
@@ -322,12 +372,8 @@ module.exports = {
     };
 
     const filter = { _id: id };
-    const updatefields = {
-      rating: rrating,
-      comments: rcomments,
-    };
-
-    const rvmember = await Member.find(filter);
+    const fields = "_id name";
+    const rvmember = await Member.find(filter, fields);
 
     if (!rvmember.length) {
       const msg = "PROFILE doesnt exists in database.";
@@ -346,7 +392,7 @@ module.exports = {
     ]);
 
     if (!rvrecords.length) {
-      const msg = `this REVIEW from member '${id}' does NOT EXIST in the database.`;
+      const msg = `this REVIEW '${rid}' from member '${id}' does NOT EXIST in the database.`;
       console.log("\nMember Console - " + msg);
 
       result.status = 404;
@@ -369,13 +415,13 @@ module.exports = {
       }
     );
 
-    const msg = `REVIEW update SUCCESSFUL for '${btitle}'.`;
+    const msg = `REVIEW update SUCCESSFUL for '${rvmember[0].name}'.`;
     console.log("\nMember Console - " + msg);
-    console.log(`\nUpdated rating: ${rrating}\nUpdated comments: ${rcomments}`);
+    console.log(`\nTitle: ${btitle}\nUpdated rating: ${rrating}\nUpdated comments: ${rcomments}`);
 
     result.status = 200;
     result.message = "Member Message - " + msg;
-    result.data = `Updated rating: ${rrating}     Updated comments: ${rcomments}`;
+    result.data = `Title: ${btitle}          Updated rating: ${rrating}          Updated comments: ${rcomments}`;
 
     return result;
   },
@@ -418,7 +464,7 @@ module.exports = {
 
       result.status = 200;
       result.message = "Member Message - " + msg;
-      result.data = `Updated name: ${pname}     Updated email: ${pemail}`;
+      result.data = `Updated name: ${pname}          Updated email: ${pemail}`;
 
       return result;
     }
@@ -438,6 +484,7 @@ module.exports = {
     if (cartarr.length > 0) {
       const titlearr = [];
       const dataarr = [];
+      let name = "";
 
       for (let i = 0; i < cartarr.length; i++) {
         const id = cartarr[i].id;
@@ -445,8 +492,10 @@ module.exports = {
         const btitle = cartarr[i].btitle;
 
         const filter = { _id: id };
-        const lnmember = await Member.find(filter);
+        const fields = "_id name";
+        const lnmember = await Member.find(filter, fields);
         const lnbook = await Book.find({ _id: bid });
+        name = lnmember[0].name;
 
         if (!lnmember.length || !lnbook.length) {
           const msg = "PROFILE or BOOK doesnt exists in database.";
@@ -523,7 +572,7 @@ module.exports = {
           dataarr.push(createobj);
         }
       }
-      const msg = "member LOAN is SUCCESSFUL.";
+      const msg = `member LOAN is SUCCESSFUL for '${name}'.`;
       console.log("\nMember Console - " + msg);
       console.log(`Item/s loaned:\n\n- ${titlearr.join("\n- ")}`);
 
