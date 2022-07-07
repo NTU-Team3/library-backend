@@ -31,8 +31,10 @@ router.get("/public/newreleases", publicController.newreleases);
 // GET /public/top rated
 router.get("/public/toprated", publicController.toprated);
 
+// GET /public/all
+router.get("/public/all", publicController.allbooks);
+
 // GET /public/bookdetail/:bookid,
 router.get("/public/bookdetail/:bookid", publicController.bookdetail);
 
 module.exports = router;
-
