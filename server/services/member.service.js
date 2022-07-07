@@ -312,9 +312,9 @@ module.exports = {
 
   //
   /** ======================================================
-   *  SERVICE - PUT, updatereviews() ***** WIP *****
+   *  SERVICE - PUT, updatereviews()
    *  ====================================================== */
-  updatereviews: async (id, rid, rrating, rcomments) => {
+  updatereviews: async (id, rid, btitle, rrating, rcomments) => {
     const result = {
       status: null,
       message: null,
@@ -339,28 +339,39 @@ module.exports = {
       return result;
     }
 
-    //const t = await Member.find({ reviews: { $elemMatch: { _id: mongoose.Types.ObjectId(rid) } } })};
-    const tt = await Member.find({ reviews: { $elemMatch: { _id: mongoose.Types.ObjectId(rid) } } });
+    const rvrecords = await Member.aggregate([
+      { $match: { _id: ObjectId(id) } },
+      { $unwind: "$reviews" },
+      { $match: { "reviews._id": ObjectId(rid) } },
+    ]);
 
-    //       { $set: { "reviews.rating": rrating } },
-    // { $set: { name: "rratings" } }
+    if (!rvrecords.length) {
+      const msg = `this REVIEW from member '${id}' does NOT EXIST in the database.`;
+      console.log("\nMember Console - " + msg);
 
-    console.log(tt);
-    //const t = await Member.find({ reviews: { $elemMatch: { _id: mongoose.Types.ObjectId(rid) } } });
+      result.status = 404;
+      result.message = "Member Message - " + msg;
 
-    // if (!rvrecords.length) {
-    //   const msg = "this REVIEW does NOT EXIST in the database.";
-    //   console.log("\nMember Console - " + msg);
+      return result;
+    }
 
-    //   result.status = 404;
-    //   result.message = "Member Message - " + msg;
+    await Member.findOneAndUpdate(
+      filter,
+      {
+        $set: {
+          "reviews.$[rid].rating": rrating,
+          "reviews.$[rid].comments": rcomments,
+          "reviews.$[rid].reviewdate": new Date(),
+        },
+      },
+      {
+        arrayFilters: [{ "rid._id": ObjectId(rid) }],
+      }
+    );
 
-    //   return result;
-    // }
-
-    const msg = `REVIEW update SUCCESSFUL for "TITLEXX".`;
+    const msg = `REVIEW update SUCCESSFUL for '${btitle}'.`;
     console.log("\nMember Console - " + msg);
-    console.log(`Updated rating: ${rrating}\nUpdated comments: ${rcomments}`);
+    console.log(`\nUpdated rating: ${rrating}\nUpdated comments: ${rcomments}`);
 
     result.status = 200;
     result.message = "Member Message - " + msg;
@@ -374,7 +385,7 @@ module.exports = {
    *  SERVICE - PUT, updateprofile()
    *  ====================================================== */
 
-  updateprofile: async (id, mname, memail, mpassword) => {
+  updateprofile: async (id, pname, pemail, ppassword) => {
     const result = {
       status: null,
       message: null,
@@ -394,20 +405,20 @@ module.exports = {
       return result;
     } else {
       const updatefields = {
-        name: mname,
-        email: memail,
-        password: mpassword,
+        name: pname,
+        email: pemail,
+        password: ppassword,
       };
 
       await Member.findByIdAndUpdate(filter, updatefields);
 
       const msg = "PROFILE update SUCCESSFUL.";
-      console.log("\nAdmin Console - " + msg + "\n");
-      console.log(`Updated name: ${mname}\nUpdated email: ${memail}\nUpdated Password: ${mpassword}`);
+      console.log("\nMember Console - " + msg + "\n");
+      console.log(`Updated name: ${pname}\nUpdated email: ${pemail}\nUpdated Password: ${ppassword}`);
 
       result.status = 200;
-      result.message = "Admin Message - " + msg;
-      result.data = `Updated name: ${mname}     Updated email: ${memail}`;
+      result.message = "Member Message - " + msg;
+      result.data = `Updated name: ${pname}     Updated email: ${pemail}`;
 
       return result;
     }
@@ -513,20 +524,20 @@ module.exports = {
         }
       }
       const msg = "member LOAN is SUCCESSFUL.";
-      console.log("\nAdmin Console - " + msg);
+      console.log("\nMember Console - " + msg);
       console.log(`Item/s loaned:\n\n- ${titlearr.join("\n- ")}`);
 
       result.status = 200;
-      result.message = "Admin Message - " + msg;
+      result.message = "Member Message - " + msg;
       result.data = dataarr;
 
       return result;
     } else {
       const msg = "CHECKOUT transcation FAILED, no items were carted out.";
-      console.log("\nAdmin Console - " + msg);
+      console.log("\nMember Console - " + msg);
 
       result.status = 404;
-      result.message = "Admin Message - " + msg;
+      result.message = "Member Message - " + msg;
       result.data = null;
 
       return result;

@@ -3,6 +3,15 @@ const memberService = require("../services/member.service");
 
 class MemberController {
   // This is a class, which has methods:
+  // 'viewloans()' - view all loans
+  // 'viewreservations()' - view all reservations
+  // 'viewhistories()' - view all histories
+  // 'viewreviews()' - view all reviews
+  // 'viewprofile()' - view editable profile info
+  // 'updateloans()' - update single loan status of book - refreshes "On Loan" to "Returned", refreshes "returndate" to current date
+  // 'updatereviews()' - update single review - refreshes "rating" / "comments" / "reviewdate"
+  // 'updateprofile()' - update member profile - refreshes "name" / "email" / "password"
+  // 'checkout()' - create loan records for single or multiple items, at checkout on the cart page
 
   //
   /** ======================================================
@@ -95,7 +104,7 @@ class MemberController {
    *  ====================================================== */
 
   async updateloans(req, res) {
-    const { id, bid } = req.body;
+    const { id, lid, bid } = req.body;
 
     if (!ObjectId.isValid(id) || !ObjectId.isValid(bid)) {
       res.status(400);
@@ -113,7 +122,7 @@ class MemberController {
    *  ====================================================== */
 
   async updatereviews(req, res) {
-    const { id, rid, rrating, rcomments } = req.body;
+    const { id, rid, btitle, rrating, rcomments } = req.body;
 
     const rlowerbound = 0.0;
     const rupperbound = 5.0;
@@ -133,12 +142,12 @@ class MemberController {
       return res.send(`Controller (update reviews) - Invalid rating, it should fall between ${rlowerbound} - ${rupperbound}.`);
     }
 
-    if (typeof rcomments != "string") {
+    if (typeof btitle != "string" || typeof rcomments != "string") {
       res.status(400);
-      return res.send(`Controller (update reviews) - Invalid comment, typeof String expected.`);
+      return res.send(`Controller (update reviews) - Invalid book title or comment, typeof String expected.`);
     }
 
-    const { status, data, message } = await memberService.updatereviews(id, rid, rrating, rcomments);
+    const { status, data, message } = await memberService.updatereviews(id, rid, btitle, rrating, rcomments);
     res.status(status);
     res.json({ message, data });
   }
@@ -149,7 +158,7 @@ class MemberController {
    *  ====================================================== */
 
   async updateprofile(req, res) {
-    const { id, mname, memail, mpassword } = req.body;
+    const { id, pname, pemail, ppassword } = req.body;
     const mailformat =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -158,12 +167,12 @@ class MemberController {
       return res.send(`Controller (update profile) - Invalid member id, typeof objectId expected.`);
     }
 
-    if (!memail.match(mailformat)) {
+    if (!pemail.match(mailformat)) {
       res.status(400);
       return res.send(`Controller (update profile) - Invalid email, format is incorrect.`);
     }
 
-    const { status, data, message } = await memberService.updateprofile(id, mname, memail, mpassword);
+    const { status, data, message } = await memberService.updateprofile(id, pname, pemail, ppassword);
     res.status(status);
     res.json({ message, data });
   }
@@ -185,7 +194,7 @@ class MemberController {
 
         if (typeof cartarr[i].btitle != "string") {
           res.status(400);
-          return res.send(`Controller (checkout) - Invalid title, typeof String expected.`);
+          return res.send(`Controller (checkout) - Invalid book title, typeof String expected.`);
         }
       }
     } else {

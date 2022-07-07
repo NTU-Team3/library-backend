@@ -2,8 +2,9 @@ const adminService = require("../services/admin.service");
 
 class AdminController {
   // This is a class, which has methods:
-  // 'addmembers()' - inserts demodata of members
-  // 'deletemembers()' - deletes demodata of members
+  // 'addmembers()' - inserts demo data of members
+  // 'deletemembers()' - deletes demo data of members
+  // 'resetmembers(delm, addm)' - resets demo data of members with callback functions
   // 'updatereservations()' - flips reservation status of book - update "in queue" TO "ready for pickup", update furthest pickup date possible
 
   //
