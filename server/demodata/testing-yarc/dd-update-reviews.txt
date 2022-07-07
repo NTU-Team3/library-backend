@@ -2,8 +2,14 @@
 
 
 
+
 http://localhost:3000/member/u-reviews
 
+
+
+
+
+<<<<<<<<<<<< -------------------- ikoh -------------------- >>>>>>>>>>>>
 {
   "id": "62bb5207127ffb266882da91",
   "rid": "62bdcff38123caa7ef1df11a",
@@ -22,6 +28,10 @@ http://localhost:3000/member/u-reviews
 }
 
 
+
+
+
+<<<<<<<<<<<< -------------------- swchee -------------------- >>>>>>>>>>>>
 {
   "id": "62bb5207127ffb266882da92",
   "rid": "62bdcff38123caa7ef1df02d",
@@ -29,3 +39,13 @@ http://localhost:3000/member/u-reviews
   "rrating": 4.1,
   "rcomments": "An enriching read, suited for everyone with the state of our current world."
 }
+
+
+
+
+
+
+
+
+
+
