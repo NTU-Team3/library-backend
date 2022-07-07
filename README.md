@@ -39,4 +39,4 @@
 | 62bb5207127ffb266882da93 | rlau                 | 1 record/s in loans - "On Loan" (x1)                                                                                                        |
 | 62bb5207127ffb266882da94 | sbahri               | 1 record/s in reservations - "Pickup Ready" (x1)                                                                                            |
 | 62bb5207127ffb266882da95 | kmsheng              | 0 record/s                                                                                                                                  |
-| 62bb5207127ffb266882da99 | TEST USER            | 0 record/s - _[ \*\*\* This particular record is not part of the demodata generated from /admin/a-members ]_]                               |
+| 62bb5207127ffb266882da99 | TEST USER            | 0 record/s - _[ \*\*\* This particular record is not part of the demodata generated from /admin/a-members ]_                                |
