@@ -17,17 +17,17 @@
 
 ### 🚩 _/member/..._
 
-| Verb | Path                      | Payload                          | Function           | Description                                                                                                     | Comments           |
-| ---- | ------------------------- | -------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------- | ------------------ |
-| GET  | /v-loans/:memberid        | id                               | viewloans()        | - view all loans                                                                                                |                    |
-| ⬆️   | /v-reservations/:memberid | id                               | viewreservations() | - view all histories                                                                                            |                    |
-| ⬆️   | /v-histories/:memberid    | id                               | viewhistories()    | - view all reservations                                                                                         |                    |
-| ⬆️   | /v-reviews/:memberid      | id                               | viewreviews()      | - view all reviews                                                                                              |                    |
-| ⬆️   | /v-profile/:memberid      | id                               | viewprofile()      | - view editable profile info                                                                                    | - Unhashing on pwd |
-| PUT  | /u-loans/                 |                                  | updateloans()      | - update single loan status of book - refreshes "On Loan" to "Returned", refreshes "returndate" to current date | - In Progress      |
-| ⬆️   | /u-reviews/               | { id, rid, rrating, rcomments }  | updatereviews()    | - update single review - refreshes "rating" / "comments" / "reviewdate"                                         | - In Progress      |
-| ⬆️   | /u-profile/               | { id, mname, memail, mpassword } | updateprofile()    | - update member profile - refreshes "name" / "email" / "password"                                               | - Hashing on pwd   |
-| ⬆️   | /checkout                 | [ { id, bid, btitle } ]          | checkout()         | - create loan records for single or multiple items, at checkout on the cart page                                |                    |
+| Verb | Path                      | Payload                                 | Function           | Description                                                                                                     | Comments           |
+| ---- | ------------------------- | --------------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------- | ------------------ |
+| GET  | /v-loans/:memberid        | id                                      | viewloans()        | - view all loans                                                                                                |                    |
+| ⬆️   | /v-reservations/:memberid | id                                      | viewreservations() | - view all reservations                                                                                         |                    |
+| ⬆️   | /v-histories/:memberid    | id                                      | viewhistories()    | - view all histories                                                                                            |                    |
+| ⬆️   | /v-reviews/:memberid      | id                                      | viewreviews()      | - view all reviews                                                                                              |                    |
+| ⬆️   | /v-profile/:memberid      | id                                      | viewprofile()      | - view editable profile info                                                                                    | - Unhashing on pwd |
+| PUT  | /u-loans/                 |                                         | updateloans()      | - update single loan status of book - refreshes "On Loan" to "Returned", refreshes "returndate" to current date | - In Progress      |
+| ⬆️   | /u-reviews/               | { id, rid, btitle, rrating, rcomments } | updatereviews()    | - update single review - refreshes "rating" / "comments" / "reviewdate"                                         |                    |
+| ⬆️   | /u-profile/               | { id, pname, pemail, ppassword }        | updateprofile()    | - update member profile - refreshes "name" / "email" / "password"                                               | - Hashing on pwd   |
+| ⬆️   | /checkout                 | [ { id, bid, btitle } ]                 | checkout()         | - create loan records for single or multiple items, at checkout on the cart page                                |                    |
 
 &nbsp;
 &nbsp;
