@@ -16,11 +16,14 @@ router.get("/", (req, rest) => {
   rest.json(info);
 });
 
-router.get("/public", (req, res) => {
+/*router.get("/public", (req, res) => {
   let info = {};
   info.message = "You have called a public route!";
   res.json(info);
-});
+});*/
+
+// POST /public/
+router.get("/public", publicController.allbooks);
 
 // GET /public/new releases
 router.get("/public/newreleases", publicController.newreleases);
@@ -28,4 +31,8 @@ router.get("/public/newreleases", publicController.newreleases);
 // GET /public/top rated
 router.get("/public/toprated", publicController.toprated);
 
+// GET /public/bookdetail/:bookid,
+router.get("/public/bookdetail/:bookid", publicController.bookdetail);
+
 module.exports = router;
+
