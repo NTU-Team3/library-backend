@@ -1,0 +1,17 @@
+
+
+
+
+
+http://localhost:3000/tmp/register
+
+
+
+
+
+{
+  "rname": "NEW USER",
+  "remail": "newuser@mail.com",
+  "rpassword": "0101"
+}
+
