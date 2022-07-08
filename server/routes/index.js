@@ -24,6 +24,34 @@ app.use(adminRoutes);
 const authRoutes = require("./auth.routes");
 app.use(authRoutes);
 
+/*
+
+
+
+
+
+<<< TMP 1st-level routes >>> FOR AUTHENTICATION ROUTE
+Please update to your setup & requirements
+
+
+
+
+
+
+*/
+//
+
+const tmpRoutes = require("./tmp.routes");
+app.use(tmpRoutes);
+
+//
+//
+//
+//
+//
+//
+//
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   res.status(404);
