@@ -34,6 +34,7 @@ module.exports = {
     const emailexist = await Member.exists({ email: remail });
 
     if (emailexist === null) {
+      // JWT and hashing etc occurs here, before hashed member password is input into database
       const created = await Member.create([
         {
           name: rname,
