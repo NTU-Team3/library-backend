@@ -336,7 +336,7 @@ module.exports = {
       return result;
     }
 
-    await Member.findOneAndUpdate(
+    const updated = await Member.findOneAndUpdate(
       filter,
       {
         $set: {
@@ -346,16 +346,21 @@ module.exports = {
       },
       {
         arrayFilters: [{ "lid._id": ObjectId(lid) }],
+        returnDocument: "after",
       }
     );
 
+    const utitle = updated.loans[0].title;
+    const ustatus = updated.loans[0].status;
+    const ureturndate = updated.loans[0].returndate.toDateString();
+
     const msg = `LOAN return SUCCESSFUL for '${lmember[0].name}'.`;
     console.log("\nMember Console - " + msg);
-    console.log(`\nTitle: ${btitle}\nStatus: ${lstatus}\nReturn date: ${new Date().toDateString()}`);
+    console.log(`\nTitle: ${utitle}\nStatus: ${ustatus}\nReturn date: ${ureturndate}`);
 
     result.status = 200;
     result.message = "Member Message - " + msg;
-    result.data = `Title: ${btitle}          Status: ${lstatus}          Return date: ${new Date().toDateString()}`;
+    result.data = `Title: ${utitle}          Status: ${ustatus}          Return date: ${ureturndate}`;
 
     return result;
   },
@@ -401,7 +406,7 @@ module.exports = {
       return result;
     }
 
-    await Member.findOneAndUpdate(
+    const updated = await Member.findOneAndUpdate(
       filter,
       {
         $set: {
@@ -412,16 +417,21 @@ module.exports = {
       },
       {
         arrayFilters: [{ "rid._id": ObjectId(rid) }],
+        returnDocument: "after",
       }
     );
 
+    const urating = updated.reviews[0].rating;
+    const ucomments = updated.reviews[0].comments;
+    const ureviewdate = updated.reviews[0].reviewdate.toDateString();
+
     const msg = `REVIEW update SUCCESSFUL for '${rvmember[0].name}'.`;
     console.log("\nMember Console - " + msg);
-    console.log(`\nTitle: ${btitle}\nUpdated rating: ${rrating}\nUpdated comments: ${rcomments}`);
+    console.log(`\nTitle: ${btitle}\nUpdated rating: ${urating}\nUpdated comments: ${ucomments}\nUpdated review date: ${ureviewdate}`);
 
     result.status = 200;
     result.message = "Member Message - " + msg;
-    result.data = `Title: ${btitle}          Updated rating: ${rrating}          Updated comments: ${rcomments}`;
+    result.data = `Title: ${btitle}          Updated rating: ${urating}          Updated comments: ${ucomments}          Updated review date: ${ureviewdate}`;
 
     return result;
   },
@@ -450,21 +460,49 @@ module.exports = {
 
       return result;
     } else {
-      const updatefields = {
-        name: pname,
-        email: pemail,
-        password: ppassword,
-      };
+      const emaildb = pfmember[0].email;
+      let proceed = false;
 
-      await Member.findByIdAndUpdate(filter, updatefields);
+      // The below checks if the new email input corresponds any other email in the database
+      if (emaildb != pemail) {
+        const emailexist = await Member.exists({ email: pemail });
 
-      const msg = "PROFILE update SUCCESSFUL.";
-      console.log("\nMember Console - " + msg + "\n");
-      console.log(`Updated name: ${pname}\nUpdated email: ${pemail}\nUpdated Password: ${ppassword}`);
+        if (emailexist === null) {
+          proceed = true;
+        }
+      }
 
-      result.status = 200;
+      if (emaildb === pemail || proceed === true) {
+        const updatefields = {
+          name: pname,
+          email: pemail,
+          password: ppassword,
+        };
+
+        const updated = await Member.findByIdAndUpdate(filter, updatefields, { returnDocument: "after" });
+
+        const uname = updated.name;
+        const uemail = updated.email;
+        const upassword = updated.password;
+
+        const msg = "PROFILE update SUCCESSFUL.";
+        console.log("\nMember Console - " + msg + "\n");
+        console.log(`Updated name: ${uname}\nUpdated email: ${uemail}\nUpdated Password: ${upassword}`);
+
+        result.status = 200;
+        result.message = "Member Message - " + msg;
+        result.data = `Updated name: ${uname}          Updated email: ${uemail}`;
+
+        return result;
+      }
+
+      const msg = "PROFILE update FAILED. An existing account with this email found, pls update with another email.";
+      console.log("\nMember Console - " + msg);
+      console.log(`Email: ${pemail}\n`);
+
+      result.status = 404;
       result.message = "Member Message - " + msg;
-      result.data = `Updated name: ${pname}          Updated email: ${pemail}`;
+      result.data = pemail;
 
       return result;
     }
