@@ -5,7 +5,6 @@ class AdminController {
   // 'addmembers()' - inserts demo data of members
   // 'deletemembers()' - deletes demo data of members
   // 'resetmembers(delm, addm)' - resets demo data of members with callback functions
-  // 'updatereservations()' - flips reservation status of book - update "in queue" TO "ready for pickup", update furthest pickup date possible
 
   //
   /** ======================================================
@@ -39,16 +38,6 @@ class AdminController {
     res.status(status);
     res.json({ message, data });
   }
-
-  //
-  /** ======================================================
-   *  CONTROLLER - DELETE, updatereservation()
-   *  ====================================================== */
-  // async updatereservations(req, res) {
-  //   const { status, data, message } = await adminService.updatereservations();
-  //   res.status(status);
-  //   res.json({ message, data });
-  // }
 }
 
 module.exports = AdminController;

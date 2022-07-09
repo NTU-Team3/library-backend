@@ -111,6 +111,11 @@ class MemberController {
       return res.send(`Controller (update loans) - Invalid member id or loan id, typeof objectId expected.`);
     }
 
+    if (typeof btitle != "string") {
+      res.status(400);
+      return res.send(`Controller (update loans) - Invalid book title, typeof String expected.`);
+    }
+
     const { status, data, message } = await memberService.updateloans(id, lid, btitle);
     res.status(status);
     res.json({ message, data });
@@ -132,14 +137,14 @@ class MemberController {
       return res.send(`Controller (update reviews) - Invalid member id or review id, typeof objectId expected.`);
     }
 
-    if (typeof rrating != "number") {
-      res.status(400);
-      return res.send(`Controller (update reviews) - Invalid rating, typeof Number expected.`);
-    }
-
     if (rrating < rlowerbound || rrating > rupperbound) {
       res.status(400);
       return res.send(`Controller (update reviews) - Invalid rating, it should fall between ${rlowerbound} - ${rupperbound}.`);
+    }
+
+    if (typeof rrating != "number") {
+      res.status(400);
+      return res.send(`Controller (update reviews) - Invalid rating, typeof Number expected.`);
     }
 
     if (typeof btitle != "string" || typeof rcomments != "string") {
@@ -158,7 +163,7 @@ class MemberController {
    *  ====================================================== */
 
   async updateprofile(req, res) {
-    const { id, pname, pemail, ppassword } = req.body;
+    const { id, pname, pemail, plocation, ppassword } = req.body;
     const mailformat =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -172,7 +177,12 @@ class MemberController {
       return res.send(`Controller (update profile) - Invalid email, format is incorrect.`);
     }
 
-    const { status, data, message } = await memberService.updateprofile(id, pname, pemail, ppassword);
+    if (typeof pname != "string" || typeof pemail != "string" || typeof plocation != "string" || typeof ppassword != "string") {
+      res.status(400);
+      return res.send(`Controller (update profile) - Invalid name / email / location / password, typeof String expected.`);
+    }
+
+    const { status, data, message } = await memberService.updateprofile(id, pname, pemail, plocation, ppassword);
     res.status(status);
     res.json({ message, data });
   }

@@ -25,7 +25,7 @@ module.exports = {
       console.log("\nAdmin Console - " + msg);
 
       created.forEach((e) => {
-        console.log(`\nname: ${e.name}\nemail: ${e.email}\n--------------------------------`);
+        console.log(`\nName: ${e.name}\nEmail: ${e.email}\nLocation: ${e.location}\n--------------------------------`);
       });
 
       result.status = 200;
@@ -80,7 +80,7 @@ module.exports = {
 
       getmembers.forEach((e) => {
         arr.push(e.name, e.email);
-        console.log(`\nname: ${e.name}\nemail: ${e.email}\n--------------------------------`);
+        console.log(`\nName: ${e.name}\nEmail: ${e.email}\nLocation: ${e.location}\n--------------------------------`);
       });
 
       result.status = 200;
@@ -116,9 +116,4 @@ module.exports = {
     result.message = "Admin Message - " + msg;
     return result;
   },
-
-  //
-  /** ======================================================
-   *  SERVICE - PUT, updatereservation()
-   *  ====================================================== */
 };

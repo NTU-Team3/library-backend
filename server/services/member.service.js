@@ -441,7 +441,7 @@ module.exports = {
    *  SERVICE - PUT, updateprofile()
    *  ====================================================== */
 
-  updateprofile: async (id, pname, pemail, ppassword) => {
+  updateprofile: async (id, pname, pemail, plocation, ppassword) => {
     const result = {
       status: null,
       message: null,
@@ -464,7 +464,7 @@ module.exports = {
       let proceed = false;
 
       // The below checks if the new email input corresponds any other email in the database
-      if (emaildb != pemail) {
+      if (emaildb !== pemail) {
         const emailexist = await Member.exists({ email: pemail });
 
         if (emailexist === null) {
@@ -476,6 +476,7 @@ module.exports = {
         const updatefields = {
           name: pname,
           email: pemail,
+          location: plocation,
           password: ppassword,
         };
 
@@ -483,15 +484,16 @@ module.exports = {
 
         const uname = updated.name;
         const uemail = updated.email;
+        const ulocation = updated.location;
         const upassword = updated.password;
 
         const msg = "PROFILE update SUCCESSFUL.";
         console.log("\nMember Console - " + msg + "\n");
-        console.log(`Updated name: ${uname}\nUpdated email: ${uemail}\nUpdated Password: ${upassword}`);
+        console.log(`Updated name: ${uname}\nUpdated email: ${uemail}\nUpdated location: ${ulocation}\nUpdated Password: ${upassword}`);
 
         result.status = 200;
         result.message = "Member Message - " + msg;
-        result.data = `Updated name: ${uname}          Updated email: ${uemail}`;
+        result.data = `Updated name: ${uname}          Updated email: ${uemail}          Updated location: ${ulocation}`;
 
         return result;
       }
