@@ -93,6 +93,11 @@ const memberSchema = new mongoose.Schema(
       },
     },
 
+    location: {
+      type: String,
+      default: "-",
+    },
+
     password: {
       type: String,
       required: true,
