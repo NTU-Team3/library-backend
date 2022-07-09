@@ -3,6 +3,7 @@
     "_id": "62bb5207127ffb266882da91",
     "name": "ikoh",
     "email": "ikoh@mail.com",
+    "location": "Singapore",
     "password": "1111",
     "profilepic": "https://icon-library.com/images/icon-avatars/icon-avatars-12.jpg",
     "outstandingfines": 5.1,
@@ -88,6 +89,7 @@
     "_id": "62bb5207127ffb266882da92",
     "name": "swchee",
     "email": "swchee@mail.com",
+    "location": "Bhutan",
     "password": "2222",
     "profilepic": "http://carismartes.com.br/assets/global/images/avatars/avatar5_big@2x.png",
     "outstandingfines": 1.9,
@@ -137,6 +139,7 @@
     "_id": "62bb5207127ffb266882da93",
     "name": "rlau",
     "email": "rlau@mail.com",
+    "location": "Hong Kong",
     "password": "3333",
     "loans": [
       {
@@ -154,6 +157,7 @@
     "_id": "62bb5207127ffb266882da94",
     "name": "sbahri",
     "email": "sbahri@mail.com",
+    "location": "United Arab Emirates",
     "password": "4444",
     "reservations": [
       {
@@ -170,6 +174,7 @@
     "_id": "62bb5207127ffb266882da95",
     "name": "kmsheng",
     "email": "kmshengmail.com",
+    "location": "Japan",
     "password": "5555"
   }
 ]

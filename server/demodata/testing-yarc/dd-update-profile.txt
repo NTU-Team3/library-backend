@@ -14,7 +14,9 @@ http://localhost:3000/member/u-profile
     "id": "62bb5207127ffb266882da99",
     "pname": "1234 5678",
     "pemail": "1234@mail.com",
+    "location": "Angola",
     "ppassword": "1234"
+    
   }
 
   
@@ -22,6 +24,7 @@ http://localhost:3000/member/u-profile
     "id": "62bb5207127ffb266882da99",
     "pname": "TEST USER",
     "pemail": "test_user@mail.com",
+    "plocation": "Nigeria",
     "ppassword": "0000"
   }
 

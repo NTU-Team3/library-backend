@@ -2,11 +2,11 @@
 
 
 
-http://localhost:3000/member/v-loans
-http://localhost:3000/member/v-reservations
-http://localhost:3000/member/v-histories
-http://localhost:3000/member/v-reviews
-http://localhost:3000/member/v-profile
+http://localhost:3000/member/v-loans/
+http://localhost:3000/member/v-reservations/
+http://localhost:3000/member/v-histories/
+http://localhost:3000/member/v-reviews/
+http://localhost:3000/member/v-profile/
 
 
 
