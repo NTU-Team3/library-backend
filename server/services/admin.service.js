@@ -79,7 +79,7 @@ module.exports = {
       console.log("\nAdmin Console - " + msg);
 
       getmembers.forEach((e) => {
-        arr.push(e.name, e.email);
+        arr.push(e.name, e.email, e.location);
         console.log(`\nName: ${e.name}\nEmail: ${e.email}\nLocation: ${e.location}\n--------------------------------`);
       });
 

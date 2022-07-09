@@ -273,7 +273,7 @@ module.exports = {
     };
 
     const filter = { _id: id };
-    const fields = "name email password";
+    const fields = "name email location password";
     const pfrecord = await Member.find(filter, fields);
 
     if (!pfrecord.length) {
