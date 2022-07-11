@@ -1,7 +1,7 @@
 [
   {
     "_id": "62bb5207127ffb266882da91",
-    "name": "ikoh",
+    "name": "Irene Koh",
     "email": "ikoh@mail.com",
     "location": "Singapore",
     "password": "1111",
@@ -87,7 +87,7 @@
 
   {
     "_id": "62bb5207127ffb266882da92",
-    "name": "swchee",
+    "name": "Soh Wai Chee",
     "email": "swchee@mail.com",
     "location": "Bhutan",
     "password": "2222",
@@ -137,7 +137,7 @@
 
   {
     "_id": "62bb5207127ffb266882da93",
-    "name": "rlau",
+    "name": "Royston Lau",
     "email": "rlau@mail.com",
     "location": "Hong Kong",
     "password": "3333",
@@ -155,7 +155,7 @@
 
   {
     "_id": "62bb5207127ffb266882da94",
-    "name": "sbahri",
+    "name": "Saiful Bahri",
     "email": "sbahri@mail.com",
     "location": "United Arab Emirates",
     "password": "4444",
@@ -172,7 +172,7 @@
 
   {
     "_id": "62bb5207127ffb266882da95",
-    "name": "kmsheng",
+    "name": "Kwek Ming Sheng",
     "email": "kmshengmail.com",
     "location": "Japan",
     "password": "5555"
