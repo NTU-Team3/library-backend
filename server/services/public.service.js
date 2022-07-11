@@ -213,4 +213,55 @@ module.exports = {
 
     return result;
   },
+
+  bookSearch: async (searchterm) => {
+    const result = {
+      status: null,
+      message: null,
+      data: null,
+    };
+    console.log("Search result.");
+
+    if (!Books) {
+      result.status = 404;
+      result.message = "The database has not been setup.";
+      return result;
+    }
+    // fetch all newly released book from database
+    const matchResults = await Books.find(
+      {
+        $or: [
+          { title: new RegExp(searchterm, "i") },
+          { desc: new RegExp(searchterm, "i") },
+          { author: new RegExp(searchterm, "i") },
+        ],
+      },
+
+      {
+        id: 1,
+        title: 1,
+        thumbnail: 1,
+        category: 1,
+        author: 1,
+        rating: 1,
+        globalrating: 1,
+        desc: 1,
+      }
+    );
+
+    // error handling
+    if (!matchResults) {
+      result.status = 404;
+      result.message = "No result found";
+      return result;
+    }
+
+    result.status = 200;
+    result.message = `${searchterm} return the following search results`;
+    result.data = matchResults;
+
+    console.log(matchResults);
+
+    return result;
+  },
 };
