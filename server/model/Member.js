@@ -77,13 +77,16 @@ const memberSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      trim: true, // remove white space from both side of the string
       required: true,
     },
 
     email: {
       type: String,
+      unique: true,
       required: true,
       lowercase: true,
+      trim: true,
       minLength: 8,
       validate: {
         validator: (email) => {
