@@ -47,7 +47,7 @@ module.exports = {
       },
       {
         $sort: {
-          "loans.loandate": 1,
+          "loans.duedate": 1,
         },
       },
     ]);
@@ -185,7 +185,7 @@ module.exports = {
       },
       {
         $sort: {
-          "loans.returndate": 1,
+          "loans.returndate": -1,
         },
       },
     ]);
@@ -254,7 +254,7 @@ module.exports = {
       },
       {
         $sort: {
-          "reviews.reviewdate": 1,
+          "reviews.reviewdate": -1,
         },
       },
     ]);
