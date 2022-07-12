@@ -37,4 +37,7 @@ router.get("/public/all", publicController.allbooks);
 // GET /public/bookdetail/:bookid,
 router.get("/public/bookdetail/:bookid", publicController.bookdetail);
 
+// GET /public/bookdetail/:searchterm,
+router.get("/public/search/:searchterm", publicController.bookSearch);
+
 module.exports = router;

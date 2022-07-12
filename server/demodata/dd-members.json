@@ -1,7 +1,7 @@
 [
   {
     "_id": "62bb5207127ffb266882da91",
-    "name": "ikoh",
+    "name": "Irene Koh",
     "email": "ikoh@mail.com",
     "location": "Singapore",
     "password": "1111",
@@ -87,10 +87,10 @@
 
   {
     "_id": "62bb5207127ffb266882da92",
-    "name": "swchee",
+    "name": "Soh Wai Chee",
     "email": "swchee@mail.com",
     "location": "Bhutan",
-    "password": "2222",
+    "password": "22222",
     "profilepic": "http://carismartes.com.br/assets/global/images/avatars/avatar5_big@2x.png",
     "outstandingfines": 1.9,
     "loans": [
@@ -137,10 +137,10 @@
 
   {
     "_id": "62bb5207127ffb266882da93",
-    "name": "rlau",
+    "name": "Royston Lau",
     "email": "rlau@mail.com",
     "location": "Hong Kong",
-    "password": "3333",
+    "password": "333333",
     "loans": [
       {
         "_id": "62bdcff38123caa7ef1df03a",
@@ -155,10 +155,10 @@
 
   {
     "_id": "62bb5207127ffb266882da94",
-    "name": "sbahri",
+    "name": "Saiful Bahri",
     "email": "sbahri@mail.com",
     "location": "United Arab Emirates",
-    "password": "4444",
+    "password": "4444444",
     "reservations": [
       {
         "_id": "62bdcff38123caa7ef1df04e",
@@ -172,9 +172,9 @@
 
   {
     "_id": "62bb5207127ffb266882da95",
-    "name": "kmsheng",
+    "name": "Kwek Ming Sheng",
     "email": "kmshengmail.com",
     "location": "Japan",
-    "password": "5555"
+    "password": "55555555"
   }
 ]

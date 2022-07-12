@@ -45,6 +45,11 @@ module.exports = {
           "loans.duedate": 1,
         },
       },
+      {
+        $sort: {
+          "loans.duedate": 1,
+        },
+      },
     ]);
 
     if (!lnrecords.length) {
@@ -105,6 +110,11 @@ module.exports = {
           "reservations.title": 1,
           "reservations.status": 1,
           "reservations.latestpickup": 1,
+        },
+      },
+      {
+        $sort: {
+          "reservations.latestpickup": -1,
         },
       },
     ]);
@@ -173,6 +183,11 @@ module.exports = {
           "loans.returndate": 1,
         },
       },
+      {
+        $sort: {
+          "loans.returndate": -1,
+        },
+      },
     ]);
 
     if (!hsrecords.length) {
@@ -237,6 +252,11 @@ module.exports = {
           "reviews.reviewdate": 1,
         },
       },
+      {
+        $sort: {
+          "reviews.reviewdate": -1,
+        },
+      },
     ]);
 
     if (!rvrecords.length) {
@@ -273,7 +293,7 @@ module.exports = {
     };
 
     const filter = { _id: id };
-    const fields = "name email location password";
+    const fields = "name email location password profilepic";
     const pfrecord = await Member.find(filter, fields);
 
     if (!pfrecord.length) {

@@ -32,11 +32,11 @@
 &nbsp;
 &nbsp;
 
-| Members.\_id             | Members.name | Members.loans/reservations/reviews                                                                                                                  |
-| ------------------------ | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 62bb5207127ffb266882da91 | ikoh         | 8 total record/s in : loans - "On Loan" (x2), loans (histories) - "Returned" (x2), reservations - "Pickup Ready (x1), "In Queue" (x1), reviews (x2) |
-| 62bb5207127ffb266882da92 | swchee       | 4 total record/s in : loans - "On Loan" (x1), loans (histories) - "Returned" (x1), reservations - "In Queue" (x1), reviews (x1)                     |
-| 62bb5207127ffb266882da93 | rlau         | 1 total record/s in : loans - "On Loan" (x1)                                                                                                        |
-| 62bb5207127ffb266882da94 | sbahri       | 1 total record/s in : reservations - "Pickup Ready" (x1)                                                                                            |
-| 62bb5207127ffb266882da95 | kmsheng      | 0 record/s                                                                                                                                          |
-| 62bb5207127ffb266882da99 | TEST USER    | 0 record/s - _[ \*\*\* This particular record is not part of the demodata generated from /admin/a-members ]_                                        |
+| Members.\_id             | Members.name    | Members.loans/reservations/reviews                                                                                                                  |
+| ------------------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 62bb5207127ffb266882da91 | Irene Koh       | 8 total record/s in : loans - "On Loan" (x2), loans (histories) - "Returned" (x2), reservations - "Pickup Ready (x1), "In Queue" (x1), reviews (x2) |
+| 62bb5207127ffb266882da92 | Soh Wai Chee    | 4 total record/s in : loans - "On Loan" (x1), loans (histories) - "Returned" (x1), reservations - "In Queue" (x1), reviews (x1)                     |
+| 62bb5207127ffb266882da93 | Royston Lau     | 1 total record/s in : loans - "On Loan" (x1)                                                                                                        |
+| 62bb5207127ffb266882da94 | Saiful Bahri    | 1 total record/s in : reservations - "Pickup Ready" (x1)                                                                                            |
+| 62bb5207127ffb266882da95 | Kwek Ming Sheng | 0 record/s                                                                                                                                          |
+| 62bb5207127ffb266882da99 | TEST USER       | 0 record/s - _[ \*\*\* This particular record is not part of the demodata generated from /admin/a-members ]_                                        |

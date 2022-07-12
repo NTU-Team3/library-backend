@@ -26,6 +26,7 @@ class PublicController {
 
   async bookdetail(req, res) {
     const bookId = req.params.bookid;
+
     if (!ObjectId.isValid(bookId)) {
       res.status(400);
       return res.send(
@@ -33,6 +34,21 @@ class PublicController {
       );
     }
     const { status, data, message } = await publicService.bookdetail(bookId);
+    res.status(status);
+    res.json({ message, data });
+  }
+
+  async bookSearch(req, res) {
+    const searchterm = req.params.searchterm;
+    // if (!ObjectId.isValid(searchterm)) {
+    //   res.status(400);
+    //   return res.send(
+    //     `Controller (book detail) - Invalid searchterm, typeof objectId expected.`
+    //   );
+    // }
+    const { status, data, message } = await publicService.bookSearch(
+      searchterm
+    );
     res.status(status);
     res.json({ message, data });
   }
