@@ -230,11 +230,7 @@ module.exports = {
     // fetch all newly released book from database
     const matchResults = await Books.find(
       {
-        $or: [
-          { title: new RegExp(searchterm, "i") },
-          { desc: new RegExp(searchterm, "i") },
-          { author: new RegExp(searchterm, "i") },
-        ],
+        $or: [{ title: new RegExp(searchterm, "i") }, { desc: new RegExp(searchterm, "i") }, { author: new RegExp(searchterm, "i") }],
       },
 
       {
