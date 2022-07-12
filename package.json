@@ -22,5 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.0",
     "nodemon": "^2.0.19"
+  },
+  "optionalDependencies": {
+    "fsevents": "~2.3.2"
   }
 }
