@@ -7,6 +7,7 @@ https://t3-library-backend.herokuapp.com/
 ## Endpoints
 
 &nbsp;
+&nbsp;
 
 ### 🚩 _/admin/..._
 
@@ -44,3 +45,15 @@ https://t3-library-backend.herokuapp.com/
 | 62bb5207127ffb266882da94 | Saiful Bahri    | 1 total record/s in : reservations - "Pickup Ready" (x1)                                                                                            |
 | 62bb5207127ffb266882da95 | Kwek Ming Sheng | 0 record/s                                                                                                                                          |
 | 62bb5207127ffb266882da99 | TEST USER       | 0 record/s - _[ \*\*\* This particular record is not part of the demodata generated from /admin/a-members ]_                                        |
+
+&nbsp;
+&nbsp;
+
+## Built With
+
+- Node.js
+- MongoDB Atlas
+- Mongoose
+- Heroku App
+- Git / GitHub
+- Agile / Scrum
