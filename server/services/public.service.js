@@ -49,7 +49,7 @@ module.exports = {
     result.message = "List of books available.";
     result.data = allbooks;
 
-    console.log(allbooks);
+    //  console.log(allbooks);
 
     return result;
   },
@@ -256,7 +256,7 @@ module.exports = {
     result.message = `${searchterm} return the following search results`;
     result.data = matchResults;
 
-    // console.log(matchResults);
+    console.log(matchResults);
 
     return result;
   },
