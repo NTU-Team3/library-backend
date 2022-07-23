@@ -1,8 +1,18 @@
 # [SDI-Capstone-library-backend](https://github.com/NTU-Team3/library-backend)
 
+## Full-Stack Deployment
+
+https://ntu-team3.github.io/library-frontend/#/
+
+&nbsp;
+&nbsp;
+
 ## Backend Deployment
 
 https://t3-library-backend.herokuapp.com/
+
+&nbsp;
+&nbsp;
 
 ## Endpoints
 
