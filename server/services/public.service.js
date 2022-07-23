@@ -256,7 +256,7 @@ module.exports = {
     result.message = `${searchterm} return the following search results`;
     result.data = matchResults;
 
-    console.log(matchResults);
+    // console.log(matchResults);
 
     return result;
   },
