@@ -208,11 +208,7 @@ class MemberController {
         }
       }
     } else {
-      const jsoncartarr = JSON.stringify(cartarr);
-      const firstchar = jsoncartarr.charAt(0);
-      const lastchar = jsoncartarr.charAt(jsoncartarr.length - 1);
-
-      if ((firstchar != "[" && lastchar != "]") || typeof cartarr.length === undefined) {
+      if (!Array.isArray(cartarr)) {
         res.status(400);
         return res.send(`Controller (checkout) - Invalid input, objects must be braced within an array "[]".`);
       }
