@@ -42,7 +42,7 @@ https://t3-library-backend.herokuapp.com/
 | ⬆️   | /v-histories/:memberid    | id                                          | viewhistories()    | - view all histories                                                             |
 | ⬆️   | /v-reviews/:memberid      | id                                          | viewreviews()      | - view all reviews                                                               |
 | ⬆️   | /v-profile/:memberid      | id                                          | viewprofile()      | - view editable profile info                                                     |
-| PUT  | /u-loans/                 | { id, lid, btitle }                         | updateloans()      | - update single loan status of book - refreshes "status" / "returndate"          |
+| PUT  | /u-loans/                 | { id, lid }                                 | updateloans()      | - update single loan status of book - refreshes "status" / "returndate"          |
 | ⬆️   | /u-reviews/               | { id, rid, btitle, rrating, rcomments }     | updatereviews()    | - update single review - refreshes "rating" / "comments" / "reviewdate"          |
 | ⬆️   | /u-profile/               | { id, pname, pemail, plocation, ppassword } | updateprofile()    | - update member profile - refreshes "name" / "email" / "location" / "password"   |
 | ⬆️   | /checkout                 | [ { id, bid, btitle } ]                     | checkout()         | - create loan records for single or multiple items, at checkout on the cart page |
