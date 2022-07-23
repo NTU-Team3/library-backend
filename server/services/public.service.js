@@ -13,7 +13,8 @@ module.exports = {
       message: null,
       data: null,
     };
-    console.log("List of books.");
+
+    // console.log("List of books.");
 
     if (!Books) {
       result.status = 404;
