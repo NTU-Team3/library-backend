@@ -322,7 +322,7 @@ module.exports = {
    *  SERVICE - PUT, updateloans()
    *  ====================================================== */
 
-  updateloans: async (id, lid, btitle) => {
+  updateloans: async (id, lid) => {
     const result = {
       status: null,
       message: null,
@@ -372,7 +372,7 @@ module.exports = {
 
     const utitle = updated.loans[0].title;
     const ustatus = updated.loans[0].status;
-    const ureturndate = updated.loans[0].returndate.toDateString();
+    const ureturndate = updated.loans[0].returndate;
 
     const msg = `LOAN return SUCCESSFUL for '${lmember[0].name}'.`;
     console.log("\nMember Console - " + msg);
@@ -443,7 +443,7 @@ module.exports = {
 
     const urating = updated.reviews[0].rating;
     const ucomments = updated.reviews[0].comments;
-    const ureviewdate = updated.reviews[0].reviewdate.toDateString();
+    const ureviewdate = updated.reviews[0].reviewdate;
 
     const msg = `REVIEW update SUCCESSFUL for '${rvmember[0].name}'.`;
     console.log("\nMember Console - " + msg);

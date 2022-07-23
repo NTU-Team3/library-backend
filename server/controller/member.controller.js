@@ -104,19 +104,14 @@ class MemberController {
    *  ====================================================== */
 
   async updateloans(req, res) {
-    const { id, lid, btitle } = req.body;
+    const { id, lid } = req.body;
 
     if (!ObjectId.isValid(id) || !ObjectId.isValid(lid)) {
       res.status(400);
       return res.send(`Controller (update loans) - Invalid member id or loan id, typeof objectId expected.`);
     }
 
-    if (typeof btitle != "string") {
-      res.status(400);
-      return res.send(`Controller (update loans) - Invalid book title, typeof String expected.`);
-    }
-
-    const { status, data, message } = await memberService.updateloans(id, lid, btitle);
+    const { status, data, message } = await memberService.updateloans(id, lid);
     res.status(status);
     res.json({ message, data });
   }
